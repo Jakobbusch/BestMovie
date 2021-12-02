@@ -19,9 +19,12 @@
 				</picture>
 			</div>
 
+<script></script>
+
 			<div class="message">
-				<h1>It's running! Now with DevOps and greg</h1>
-				<h2>Congratulations, you successfully deployed a container image to Cloud Run</h2>
+				<h1>It's running! Mathias is the mans </h1>
+				<h2>Congratulations, you successfully found mathias hidden treasure</h2>
+				<button onclick='changePage()'>Page</button>
 			</div>
 		</div>
 
@@ -71,4 +74,14 @@
 		</div>
 	</div>
 </body>
+
+<script>
+	function changePage(){
+		return res.redirect('Views/page.html.hbs');
+		console.log("Page button: "+res.tostring())
+	}
+</script>
 </html>
+
+
+

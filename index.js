@@ -14,12 +14,13 @@ const data = {
 };
 let template;
 
+
 app.get('/', async (req, res) => {
   // The handlebars template is stored in global state so this will only once.
   if (!template) {
     // Load Handlebars template from filesystem and compile for use.
     try {
-      template = handlebars.compile(readFileSync('index.html.hbs', 'utf8'));
+      template = handlebars.compile(readFileSync('Views/index.html.hbs', 'utf8'));
     } catch (e) {
       console.error(e);
       res.status(500).send('Internal Server Error');
@@ -42,3 +43,5 @@ app.listen(PORT, () => {
     `Hello from Cloud Run! The container started successfully and is listening for HTTP requests on ${PORT}`
   );
 });
+
+

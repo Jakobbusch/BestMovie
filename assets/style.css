@@ -1,27 +1,57 @@
-body {
+@import url(https://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+* { -webkit-font-smoothing:antialiased; 
+	-moz-font-smoothing:antialiased; 
+	-ms-font-smoothing:antialiased; 
+	-o-font-smoothing:antialiased; 
+	-font-smoothing:antialiased; }
+a{
+	padding: 10px;
+	font-weight: bold;
+	color: #000;
+}
+	#headerNav{
 	margin: 0;
+	padding: 0%;
+	font-family: "Open Sans", arial;
+	font-size: 20px;
+	color:#fff;
+	text-align: center;
+	}
+
+body {
+	margin:0px;
+  padding:0px;
+	font-family: "Open Sans", arial;
+	background:#1f6fd1;
+	color:#fff;
+	font-weight:300;
   }
   h1, h2, h3, h4 {
 	text-align: center;
   }
   header h1 {
+	background-color: rgb(81, 83, 81);
 	margin: 0;
 	padding: 10px;
   }
   nav, aside {
 	border-radius: 5px;
 	overflow: hidden;
-	background-color: #aba;
+	background-color: rgb(81, 83, 81);
   }
   a, button, label {
 	cursor: pointer;
 	text-decoration: none;
   }
+
   nav ul {
 	list-style-type: none;
 	margin: 0;
 	border: 0;
 	padding: 0;
+	display: inline;
   }
   nav a {
 	display: block;
@@ -44,9 +74,18 @@ body {
   
   footer p {
 	color: #f96302;
-	padding: 10px;
 	margin: 0 auto;
 	text-align: center;
+	
+
+  }
+
+  footer{
+	bottom:0;
+	position: fixed;
+	left: 0;
+	width: 100%;
+	
   }
   
   main {

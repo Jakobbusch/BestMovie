@@ -1,31 +1,25 @@
-<!doctype html>
-<html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Congratulations | Cloud Run</title>
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="preload" as="font">
-<link href="/assets/cloud-run-32-color.png" rel="icon" type="image/png" />
-<link href="/assets/style.css" rel="stylesheet" type="text/css" />
-</head>
+<header>
+	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
+  <h1>Best Movies Platform</h1>
+</header>
 
-<body>
-	<div class="container">
-		<div class="hero">
-			<div style="text-align:center;">
-				<picture>
-					<source srcset="/assets/celebration-dark.svg" media="(prefers-color-scheme: dark)">
-					<img src="/assets/celebration.svg" alt="A group celebrating" width="427" height="231">
-				</picture>
-			</div>
-
-			<div class="message">
-				<h1>It's running! Now with DevOps and greg</h1>
-				<h2>Congratulations, you successfully deployed a container image to Cloud Run</h2>
-			</div>
-		</div>
-
-		<div class="details">
+<main>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#weather">Weather</a></li>
+      <li><a href="#sports">Sports</a></li>
+    </ul>
+  </nav>
+  
+  <aside>
+    <h4>Sexy chat could be here.</h4>
+  </aside>
+  
+  <div class="content">
+    <section id="home">
+      <div class="details">
 			<p>
                 This created the revision <code>{{revision}}</code> of the Cloud Run service <code>{{service}}</code>.
             </p>
@@ -69,6 +63,22 @@
 			</p>
 
 		</div>
-	</div>
-</body>
-</html>
+    </section>
+
+    <section id="news">
+      <h2>News</h2>
+    </section>
+    
+    <section id="weather">
+      <h2>Weather</h2>
+    </section>
+    
+    <section id="sports">
+      <h2>Sports</h2>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>Welcome to my simple SPA app!</p>
+</footer>

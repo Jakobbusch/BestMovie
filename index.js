@@ -14,7 +14,6 @@ const data = {
 };
 let template;
 
-
 app.get('/', async (req, res) => {
   // The handlebars template is stored in global state so this will only once.
   if (!template) {

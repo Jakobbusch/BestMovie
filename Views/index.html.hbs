@@ -3,9 +3,18 @@
  <div id="headerNav"> <a href="#home">Home</a><a href="#news">News</a><a href="#weather">Weather</a><a href="#sports">Sports</a></div>
   
 </header>
+<script>
+	
+	window.onload = function() {
+  if (document.querySelectorAll("section:target").length == 0) {
+    window.location = "#login";
+  }
+}
+</script>
 
 
 <main>
+	
 
 	
   
@@ -15,6 +24,14 @@
   </aside>
   
   <div class="content">
+
+	  <section id="login">
+      <h2>Login</h2>
+	  <div><input type="text" placeholder="Username">
+	  <input type="password" placeholder="Password"></div>
+	  
+	  <button>Sign In</button>
+    </section>
     <section id="home">
       <div class="details">
 			<p>

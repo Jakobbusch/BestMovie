@@ -24,7 +24,7 @@ const movie = {title: 'Shawshank', Year: '1997'}
 
 window.init =async function(){
 	
-	console.log("Init Hello my friend")
+	console.log("Init")
 	const theModel = model(movie)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
@@ -34,11 +34,7 @@ window.init =async function(){
 
 <body onload = "init()">
 	<div id="base">
-  <aside>
-    <h4>chat could be here.</h4>
-	<p> [movie]</p>
-	<button @click='writeToConsole()'>Yes</button>
-  </aside>
+  
   
   <div class="content">
 
@@ -99,8 +95,9 @@ window.init =async function(){
 		</div>
     </section>
 
-    <section id="profilepage">
-      <h2>[Username] Profile Page</h2>
+    <section id="profilepage" v-for ='m in movie'>
+      <h2>{{m}} Profile Page</h2>
+	  <button @click='writeToConsole()'>Yes</button>
 
 	  <div id="favListDiv">
 		  <table id="favList">
@@ -144,11 +141,12 @@ window.init =async function(){
   </div>
 
   </div>
-</body>
+
 
 <footer>
 	<h2>Best Movies Platform</h2>
 	<p>Share your enthusiasm with fellow movie lovers</p>
 </footer>
+</body>
 
 </html>

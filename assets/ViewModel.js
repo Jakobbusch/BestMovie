@@ -9,7 +9,7 @@ export default (el, init_model) => {
 return {
     el,
     data:{
-        movieTitle:'',
+        movieTitle:'Shawshank',
         movie: model.movie
     },
     
@@ -18,6 +18,7 @@ return {
     methods:{
         async writeToConsole(){
                 console.log("Hello my friend")
+                movie = "Hello"
         }
     }
     

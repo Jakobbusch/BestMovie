@@ -18,7 +18,9 @@ return {
     methods:{
         async writeToConsole(){
                 console.log("Hello my friend")
-                movie = "Hello"
+                this.movie = [{title: 'bubaboba', year: '1997'},
+                {title: 'hasdas', year: '1991'},
+                {title: 'fgdasda', year: '1990'}]
         }
     }
     

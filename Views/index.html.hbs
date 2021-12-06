@@ -1,28 +1,43 @@
+<!DOCTYPE html>
+<html>
 <header>
 	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
  <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
   
 </header>
-<script>
-	
+
+<script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>	
 	window.onload = function() {
   if (document.querySelectorAll("section:target").length == 0) {
     window.location = "#login";
   }
-}
+}</script>
+<script type = 'module'>
 
+
+import model from "/assets/Model.js"
+import viewModel from "/assets/ViewModel.js"
+
+const movie = {title: 'Shawshank', Year: '1997'}
+
+
+window.init =async function(){
+	
+	console.log("Init Hello my friend")
+	const theModel = model(movie)
+	const vm = viewModel(document.getElementById('base'), theModel)
+	const app = new Vue(vm)
+}
 
 </script>
 
-
-<main>
-	
-
-	
-  
-  
+<body onload = "init()">
+	<div id="base">
   <aside>
-    <h4>Sexy chat could be here.</h4>
+    <h4>chat could be here.</h4>
+	<p> [movie]</p>
+	<button @click='writeToConsole()'>Yes</button>
   </aside>
   
   <div class="content">
@@ -127,10 +142,13 @@
       <h2>Sports</h2>
     </section>
   </div>
-</main>
+
+  </div>
+</body>
 
 <footer>
 	<h2>Best Movies Platform</h2>
 	<p>Share your enthusiasm with fellow movie lovers</p>
 </footer>
 
+</html>

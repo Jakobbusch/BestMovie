@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "handlebars": "^4.7.4"
+    "handlebars": "^4.7.4",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "eslint": "8.1.0",

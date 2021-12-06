@@ -21,7 +21,18 @@ return {
                 this.movie = [{title: 'bubaboba', year: '1997'},
                 {title: 'hasdas', year: '1991'},
                 {title: 'fgdasda', year: '1990'}]
+            
+                const request = require('request');
+
+    request('https://www.omdbapi.com/?apikey=8ea3b105&t=shawshank', { json: true }, (err, res, body) => {
+  if (err) { return console.log(err); }
+  console.log(body.url);
+  console.log(body.explanation);
+});
+
         }
+
+        
     }
     
 }

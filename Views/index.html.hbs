@@ -7,12 +7,7 @@
 </header>
 
 <script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script>	
-	window.onload = function() {
-  if (document.querySelectorAll("section:target").length == 0) {
-    window.location = "#login";
-  }
-}</script>
+
 <script type = 'module'>
 
 
@@ -24,15 +19,26 @@ const movie = [{title: 'Shawshank', year: '1997'},
 {title: 'Hansi', year: '1990'}]
 
 
+
 window.init =async function(){
 	
 	console.log("Init")
 	const theModel = model(movie)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
+	console.log("The Movie: "+movie)
 }
 
+
 </script>
+
+<script>	
+	window.onload = function() {
+  if (document.querySelectorAll("section:target").length == 0) {
+    window.location = "#login";
+  }
+}</script>
+
 
 <body onload = "init()">
 	<div id="base">
@@ -98,12 +104,41 @@ window.init =async function(){
     </section>
 
     <section id="profilepage">
-      <h2>movie.title Profile Page</h2>
+      <h2>Profile Page</h2>
 	  <button @click='writeToConsole()'>Yes</button>
 
 	  <div id="favListDiv">
+
+
 		  <table id="favList">
 			  <h2>Favorite List</h2>
+			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
+        <optgroup label="Select Table">
+            <option name="FavList1" value="0">Fav. List 1</option>
+            <option name="FavList2" value="1">Fav. List 2</option>
+        </optgroup>
+    </select>
+  
+    <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
+	<tbody id="movieData">
+		<tr v-for ='m in movie'>
+			<td>{{m.title}}</td>
+			<td>{{m.year}}</td>
+
+		</tr>
+	</tbody>
+</table>
+	  </div>
+	  <div id="otherfavListDiv">
+		  <table id="favList">
+			  <h2>user's Favorite List</h2>
+			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
+        <optgroup label="Select Table">
+            <option name="" value="0">Most Liked List</option>
+            <option name="FavList1" value="1">User 1</option>
+            <option name="FavList2" value="2">User 2</option>
+        </optgroup>
+    </select>
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody>
@@ -113,10 +148,6 @@ window.init =async function(){
 
 		</tr>
 	</tbody>
-    
-  
- 
-  
 </table>
 	  </div>
     </section>

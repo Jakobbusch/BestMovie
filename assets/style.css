@@ -24,6 +24,7 @@ a{
 		font-family: arial, sans-serif;
 		border-collapse: collapse;
 		width: 100%;
+		text-decoration: #1f6fd1;
 	}
 	td, th {
 		border: 1px solid #dddddd;
@@ -41,8 +42,14 @@ a{
 		  margin-right: 50px;
 		  
 	  }
+	  #otherfavListDiv{
+		max-width: 250px;
+		float: left;
+		margin-left: 50px;
+		
+	}
 
-
+	  
 
 body {
 	margin:0px;

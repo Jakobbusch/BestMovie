@@ -3,6 +3,10 @@ const {readFileSync} = require('fs');
 const handlebars = require('handlebars');
 
 const app = express();
+
+
+
+
 // Serve the files in /assets at the URI /assets.
 app.use('/assets', express.static('assets'));
 

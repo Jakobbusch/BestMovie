@@ -11,7 +11,7 @@ a{
 	font-weight: bold;
 	color: #000;
 }
-	#headerNav{
+#headerNav{
 	margin: 0;
 	padding: 0%;
 	font-family: "Open Sans", arial;
@@ -19,6 +19,30 @@ a{
 	color:#fff;
 	text-align: center;
 	}
+
+	#favList{
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	  }
+	  
+	  tr:nth-child(even) {
+		background-color: #dddddd;
+	  }
+
+	  #favListDiv{
+		  max-width: 250px;
+		  float: right;
+		  margin-right: 50px;
+		  
+	  }
+
+
 
 body {
 	margin:0px;
@@ -73,18 +97,18 @@ body {
   }
   
   footer p {
-	color: #f96302;
-	margin: 0 auto;
+	color: #000000;
 	text-align: center;
 	
 
   }
 
   footer{
-	bottom:0;
+	
 	position: fixed;
 	left: 0;
 	width: 100%;
+	margin-top: 600px;
 	
   }
   

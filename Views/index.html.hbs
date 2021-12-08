@@ -2,6 +2,7 @@
 <html>
 
 
+
 <head>
 
 <script type="module">
@@ -84,15 +85,21 @@ onAuthStateChanged(auth, (user) => {
  
 </script>
 
+<header id="loginHide">
+	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
+ <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
+  
+</header>
+
+<script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+
 </head>
 
 
+
 <body>
-<header id="loginHide">
-	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
- <div id="headerNav"> <a href="#home">Home</a><a href="#news">News</a><a href="#weather">Weather</a><a href="#sports">Sports</a></div>
-  
-</header>
+
 
 
 
@@ -104,6 +111,31 @@ onAuthStateChanged(auth, (user) => {
   
   <div class="content" id="loginHide">
 	
+=======
+import model from "/assets/Model.js"
+import viewModel from "/assets/ViewModel.js"
+
+const movie = [{title: 'Shawshank', year: '1997'},
+{title: 'Bobby', year: '1991'},
+{title: 'Hansi', year: '1990'}]
+
+
+window.init =async function(){
+	
+	console.log("Init")
+	const theModel = model(movie)
+	const vm = viewModel(document.getElementById('base'), theModel)
+	const app = new Vue(vm)
+}
+
+</script>
+
+<body onload = "init()">
+	<div id="base">
+  
+  
+  <div class="content">
+
 	  <section id="login">
 
 	  <p>
@@ -157,8 +189,28 @@ onAuthStateChanged(auth, (user) => {
 		</div>
     </section>
 
-    <section id="news">
-      <h2>News</h2>
+    <section id="profilepage">
+      <h2>movie.title Profile Page</h2>
+	  <button @click='writeToConsole()'>Yes</button>
+
+	  <div id="favListDiv">
+		  <table id="favList">
+			  <h2>Favorite List</h2>
+  
+    <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
+	<tbody>
+		<tr v-for ='m in movie'>
+			<td>{{m.title}}</td>
+			<td>{{m.year}}</td>
+
+		</tr>
+	</tbody>
+    
+  
+ 
+  
+</table>
+	  </div>
     </section>
     
     <section id="weather">
@@ -170,9 +222,20 @@ onAuthStateChanged(auth, (user) => {
     </section>
   </div>
 
+
+
+  </div>
+
+
+
 <footer>
-	<h1>Best Movies Platform</h1>
+	<h2>Best Movies Platform</h2>
+	<p>Share your enthusiasm with fellow movie lovers</p>
 </footer>
+</body>
+
 
 </body>
+
+
 </html>

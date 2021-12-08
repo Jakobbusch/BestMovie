@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 
-
-
 <head>
+<link href="/assets/style.css" rel="stylesheet" type="text/css" />
 
-<script type="module">
+<script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script type="module" >
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
 import { getAuth, signInWithRedirect , GoogleAuthProvider, onAuthStateChanged ,signOut  } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js";
 
-
+import model from "/assets/Model.js"
+import viewModel from "/assets/ViewModel.js"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBjMvVKgFVEr2XHD8t3Ot5ukXFO9W4MUDk",
@@ -36,14 +37,16 @@ const provider = new GoogleAuthProvider();
 
 
 (function () {
+ 
   function loginGoogle() {
     signInWithRedirect(auth, provider); 
   }
   document.getElementById('buttonLogin').addEventListener('click', loginGoogle, true);
 })();
 
-
+ 
 (function () {
+
   function logout() {
         signOut(auth).then(() => {
        console.log("You have been signed out")
@@ -83,38 +86,6 @@ onAuthStateChanged(auth, (user) => {
   }}
 
  
-</script>
-
-<header id="loginHide">
-	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
-  
-</header>
-
-<script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-
-
-</head>
-
-
-
-<body>
-
-
-
-
-  <aside>
-        <button class="btn btn-success" type="button" id="buttonLogin">Google Login</button>
-    <button class="btn btn-success" type="button" id="buttonLogout">Logout</button>
-    <button class="btn btn-success" type="button" id="buttonsql">sql</button>
-  </aside>
-  
-  <div class="content" id="loginHide">
-	
-=======
-import model from "/assets/Model.js"
-import viewModel from "/assets/ViewModel.js"
-
 const movie = [{title: 'Shawshank', year: '1997'},
 {title: 'Bobby', year: '1991'},
 {title: 'Hansi', year: '1990'}]
@@ -130,18 +101,27 @@ window.init =async function(){
 
 </script>
 
+
+
+</head>
+
 <body onload = "init()">
 	<div id="base">
   
   
-  <div class="content">
+  <div id="loginHide">
+	
+ <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
+  
+</div>
+  <aside>
+    <button class="btn btn-success" type="button" id="buttonLogin">Google Login</button>
+    <button class="btn btn-success" type="button" id="buttonLogout">Logout</button>
+  </aside>
+  
+  <div class="content" id="loginHide">
 
-	  <section id="login">
 
-	  <p>
-		  Heeeeeey :D 
-	  </p>
-    </section>
     <section id="home" >
       <div class="details">
 			<p>
@@ -213,13 +193,7 @@ window.init =async function(){
 	  </div>
     </section>
     
-    <section id="weather">
-      <h2>Weather</h2>
-    </section>
-    
-    <section id="sports">
-      <h2>Sports</h2>
-    </section>
+  
   </div>
 
 
@@ -233,9 +207,5 @@ window.init =async function(){
 	<p>Share your enthusiasm with fellow movie lovers</p>
 </footer>
 </body>
-
-
-</body>
-
 
 </html>

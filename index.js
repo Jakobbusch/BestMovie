@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 const express = require('express');
 const {readFileSync} = require('fs');
 const handlebars = require('handlebars');
+
 
 const app = express();
 // Serve the files in /assets at the URI /assets.
@@ -42,5 +44,7 @@ app.listen(PORT, () => {
     `Hello from Cloud Run! The container started successfully and is listening for HTTP requests on ${PORT}`
   );
 });
+
+
 
 

@@ -2,7 +2,7 @@
 <html>
 <header>
 	<link href="/assets/style.css" rel="stylesheet" type="text/css" />
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
+ <div id="headerNav"> <a href="#movies">Movies</a><a href="#profilepage">Profile Page</a></div>
   
 </header>
 
@@ -24,19 +24,21 @@ const movie = [{title: 'Shawshank', year: '1997'},
 {title: 'Hansi', year: '1990'}]
 
 
-window.init =async function(){
+window.init = async function(){
 	
-	console.log("Init")
+	//console.log("Init")
 	const theModel = model(movie)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 }
 
+
 </script>
+
 
 <body onload = "init()">
 	<div id="base">
-  
+
   
   <div class="content">
 
@@ -50,50 +52,12 @@ window.init =async function(){
 		  Heeeeeey :D 
 	  </p>
     </section>
-    <section id="home">
-      <div class="details">
-			<p>
-                This created the revision <code>{{revision}}</code> of the Cloud Run service <code>{{service}}</code>.
-            </p>
-
-			<p class="callout">
-				You can deploy any container to Cloud Run that listens for HTTP requests on the port defined by the
-				<code>PORT</code> environment variable.
-				Cloud Run will scale automatically based on requests and you never have to worry about
-				infrastructure.
-			</p>
-
-			<h3>What's next?</h3>
-			<ul>
-				<li class="next">Try out live debugging in Cloud Code for <a href="https://cloud.google.com/code/docs/vscode/debugging-a-cloud-run-service" target="_blank" rel="noopener">VS Code</a> or <a href="https://cloud.google.com/code/docs/intellij/debugger" target="_blank" rel="noopener">IntelliJ</a></li>
-				<li class="next">Make your application more secure with Secret Manager for <a href="https://cloud.google.com/code/docs/vscode/secret-manager" target="_blank" rel="noopener">VS Code</a> or <a href="https://cloud.google.com/code/docs/intellij/secret-manager" target="_blank" rel="noopener">IntelliJ</a></li>
-				<li class="next">Explore the features of Cloud Run with <a href="https://cloud.google.com/run/docs/tutorials" target="_blank" rel="noopener">Cloud Run tutorials</a> </li>
-			</ul>
+    <section id="movies">
+      <div id="search">
+		  	<input v-model:value='movieTitle' id='normal' placeholder="Search for movies...">
 			
-			<h3>Want to help shape the future of Cloud Code?</h3>
-			<ul>
-				<li class="next">
-				Sign up for the chance to participate in our ongoing research studies 
-					<a href="https://google.qualtrics.com/jfe/form/SV_4Me7SiMewdvVYhL?reserved=1&utm_source=In-product&Q_Language=en&utm_medium=own_prd&utm_campaign=Q1&productTag=clou&campaignDate=January2021&referral_code=UXlX318928" target="_blank" rel="noopener">
-						here!
-					</a>
-				</li>
-				<li class="next">Join the <b>#cloud-code</b> channel in the <a href="https://join.slack.com/t/googlecloud-community/shared_invite/zt-erdf4ity-8ZMUQ18DYV~5hkbZ~gCswg" target="_blank" rel="noopener">Google Cloud Platform Slack community</a> to ask questions, provide feedback, and get the latest Cloud Code news</li>
-			</ul>
-
-			<h3>Learn more with our documentation</h3>
-			<p class="cta">
-				<a href="https://cloud.google.com/code/docs" target="_blank" rel="noopener">
-					CLOUD CODE DOCS
-				</a>
-				<a href="https://cloud.google.com/run/docs" target="_blank" rel="noopener">
-					CLOUD RUN
-				</a>
-				<a href="https://cloud.google.com/shell/docs/editor-overview#cloud_code_integration" target="_blank" rel="noopener">
-					CLOUD CODE ON CLOUD SHELL
-				</a>
-			</p>
-
+			<button id="searchBtn" @click='searchMovieByTitle()'>Search</button>
+			<textarea id="movieTitle" v-model: value = 'movieTitle'></textarea>
 		</div>
     </section>
 

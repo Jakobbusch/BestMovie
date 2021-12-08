@@ -11,6 +11,73 @@ a{
 	font-weight: bold;
 	color: #000;
 }
+
+#addToFav{
+	margin-right: 50px;
+}
+#poster{
+	height: 400px;
+	width: 300px;
+	
+}
+.child {
+	position: absolute;
+	top: 50;
+	
+  }
+  
+  .child-1 {
+	left: 0;
+  }
+  
+  .child-2 {
+	left: 170px;
+  }
+  .child-3 {
+	left: 340px;
+  }
+  .child-4 {
+	left: 510px;
+  }
+  .child-5 {
+	left: 680px;
+  }
+  .child-6 {
+	left: 850px;
+  }
+  .child-7 {
+	left: 0;
+	top: 70px;
+  }
+  .child-8 {
+	left: 850px;
+	top: 70px;
+  }
+  .child-9 {
+	left: 340px;
+	top: 70px;
+  }
+  
+  
+  .parent {
+	position: relative;
+	margin-left: 250px;
+	margin-top: 50px;
+  }
+
+textarea{
+	resize: none;
+}
+
+#searchField{
+	width: 500px;
+}
+#searchFieldDiv{
+	margin: auto;
+	text-align: center;
+  	padding: 10px;
+
+}
 #headerNav{
 	margin: 0;
 	padding: 0%;

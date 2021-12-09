@@ -12,6 +12,17 @@ import { getAuth, signInWithRedirect , GoogleAuthProvider, onAuthStateChanged ,s
 import model from "/assets/Model.js"
 import viewModel from "/assets/ViewModel.js"
 
+
+window.init =async function(){
+	
+	
+	const movie=''
+	const theModel = model(movie)
+	const vm = viewModel(document.getElementById('base'), theModel)
+	const app = new Vue(vm)
+
+	
+}
 const firebaseConfig = {
   apiKey: "AIzaSyBjMvVKgFVEr2XHD8t3Ot5ukXFO9W4MUDk",
   authDomain: "semester6project.firebaseapp.com",
@@ -71,6 +82,7 @@ onAuthStateChanged(auth, (user) => {
       console.log("  Name: " + profile.displayName);
       console.log("  Email: " + profile.email);
       console.log("  Photo URL: " + profile.photoURL);
+      console.log("{{maybe}}");
   });
 }
   } else {
@@ -79,21 +91,15 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-window.init =async function(){
-	
-	
-	const movie=''
-	const theModel = model(movie)
-	const vm = viewModel(document.getElementById('base'), theModel)
-	const app = new Vue(vm)
-	
-}
+
 
 
 </script>
 </head>
 <body onload = "init()">
 	<div id="base">
+
+    {{maybe}}
   
   
   <div id="loginHide">

@@ -6,8 +6,6 @@
 <script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script type="module" >
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
-import { getAuth, signInWithRedirect , GoogleAuthProvider, onAuthStateChanged ,signOut  } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js";
 
 import model from "/assets/Model.js"
 import viewModel from "/assets/ViewModel.js"
@@ -23,74 +21,6 @@ window.init =async function(){
 
 	
 }
-const firebaseConfig = {
-  apiKey: "AIzaSyBjMvVKgFVEr2XHD8t3Ot5ukXFO9W4MUDk",
-  authDomain: "semester6project.firebaseapp.com",
-  projectId: "semester6project",
-  storageBucket: "semester6project.appspot.com",
-  messagingSenderId: "12632593485",
-  appId: "1:12632593485:web:a9ee8e9b6ec0faa701b804"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth();
-
-auth.languageCode = 'it';
-const provider = new GoogleAuthProvider();
- provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-  provider.setCustomParameters({
-    'login_hint': 'xxx@gmail.com'
-  });
-
-
-
-(function () {
- 
-  function loginGoogle() {
-    signInWithRedirect(auth, provider); 
-  }
-  document.getElementById('buttonLogin').addEventListener('click', loginGoogle, true);
-})();
-
- 
-(function () {
-
-  function logout() {
-        signOut(auth).then(() => {
-       console.log("You have been signed out")
-    }).catch((error) => {
-      console.log("Error")
-    });
-  }
-  document.getElementById('buttonLogout').addEventListener('click', logout, true);
-})();
-
-const user = auth.currentUser;
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
-    
-    if (user !== null) {
-    user.providerData.forEach((profile) => {
-      document.getElementById('loginHide').style.visibility = 'visible';
-      console.log("Sign-in provider: " + profile.providerId);
-      console.log("  Provider-specific UID: " + profile.uid);
-      console.log("  Name: " + profile.displayName);
-      console.log("  Email: " + profile.email);
-      console.log("  Photo URL: " + profile.photoURL);
-      console.log("{{maybe}}");
-  });
-}
-  } else {
-    console.log("Login is NOT Working!")
-    document.getElementById('loginHide').style.visibility = 'hidden';
-  }
-});
-
 
 
 
@@ -107,11 +37,10 @@ onAuthStateChanged(auth, (user) => {
  <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
   
 </div>
-    <button class="btn btn-success" type="button" id="buttonLogin">Google Login</button>
 
-     <button class="btn btn-success" type="button" id="buttonLogout">Logout</button>
   
-  
+  	  <button @click='loginGoogle()'>Yes</button>
+		<button @click='logout()'>Yes</button>
 
   
   <div class="content" id="loginHide">

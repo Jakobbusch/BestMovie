@@ -6,6 +6,10 @@ export default (el, init_model) => {
     let model = init_model
 
 
+    
+      
+    
+    
     const firebaseConfig = {
         apiKey: "AIzaSyBjMvVKgFVEr2XHD8t3Ot5ukXFO9W4MUDk",
         authDomain: "semester6project.firebaseapp.com",
@@ -29,6 +33,8 @@ export default (el, init_model) => {
         });
 
     const user = auth.currentUser;
+
+    
 
     onAuthStateChanged(auth, (user) => {
     if (user) {

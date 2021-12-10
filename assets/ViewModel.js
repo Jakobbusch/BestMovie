@@ -34,7 +34,7 @@ export default (el, init_model) => {
 
     const user = auth.currentUser;
 
-    
+    var userInfo ='';
 
     onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -44,6 +44,7 @@ export default (el, init_model) => {
         
         if (user !== null) {
         user.providerData.forEach((profile) => {
+        userInfo = profile.email;
         document.getElementById('loginHide').style.visibility = 'visible';
         console.log("Sign-in provider: " + profile.providerId);
         console.log("  Provider-specific UID: " + profile.uid);
@@ -65,7 +66,9 @@ return {
     el,
     data:{
         movieTitle:'',
-        movie: model.movie
+        movie: model.movie,
+        userdata:''
+        
     },
     
     
@@ -108,6 +111,8 @@ return {
     async loginGoogle() {
         console.log("Hello from google")
         signInWithRedirect(auth, provider); 
+        this.userdata = userInfo
+      
       },
 
     async logout() {

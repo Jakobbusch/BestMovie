@@ -37,6 +37,24 @@ return {
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
+            const data = {userID:"Mathias", movieID: this.movie.imdbID.split("tt").pop()}
+            console.log(data)
+    
+        fetch('/addToToplist', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
         }
 
         /*
@@ -58,22 +76,7 @@ return {
         console.log(res)
         this.toplist = res;
          */
-        const data = {userID:"Mathias", movieID:"12345"}
-    
-        fetch('/addToToplist', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+        
     }
 
         

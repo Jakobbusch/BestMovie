@@ -6,14 +6,15 @@ return {
     el,
     data:{
         movieTitle:'',
-        movie: model.movie
+        movie: model.movie,
+        toplist: model.moviefromDb
     },
     
     
     
     methods:{
         async writeToConsole(){
-                this.movie = [{Title: 'bubaboba', Released: '1997'},
+                this.toplist = [{Title: 'bubaboba', Released: '1997'},
                 {Title: 'hasdas', Released: '1991'},
                 {Title: 'fgdasda', Released: '1990'}]
             
@@ -38,12 +39,41 @@ return {
             console.log(this.movie.Title + ' Added to favourites')
         }
 
-        //const res = await fetch('http://localhost:8080/search', {method: 'GET'})
+        /*
         const res = await fetch('http://localhost:8080/search').then(res => res.json())
         console.log("responce: ")
         console.log(res)
-        
-        
+        */
+
+        /*
+        const res = await fetch('http://localhost:8080/toplists').then(res => res.json())
+        console.log("responce: ")
+        console.log(res)
+        this.toplist = res;
+        */
+
+       /*
+       const res = await fetch('/searchById/mathias').then(res => res.json())
+        console.log("responce: ")
+        console.log(res)
+        this.toplist = res;
+         */
+        const data = {userID:"Mathias", movieID:"12345"}
+    
+        fetch('/addToToplist', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
     }
 
         

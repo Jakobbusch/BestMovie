@@ -15,6 +15,7 @@ window.init =async function(){
 	
 	
 	const movie=''
+	const 
 	const toplist = await fetch('http://localhost:8080/toplists').then(res => res.json())
 	const theModel = model(movie, toplist)
 	const vm = viewModel(document.getElementById('base'), theModel)

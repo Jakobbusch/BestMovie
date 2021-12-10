@@ -4,8 +4,11 @@ const handlebars = require('handlebars');
 const browserify = require("browserify");
 const { connect } = require("http2");
 const mysql = require("mysql");
+const { waitForDebugger } = require('inspector');
+var bodyParser = require('body-parser')
 
 const app = express();
+app.use(bodyParser.json());
 // Serve the files in /assets at the URI /assets.
 app.use('/assets', express.static('assets'));
 
@@ -26,10 +29,56 @@ const con = mysql.createConnection({
   database: "MyDB",
 });
 
-const bob = {message:"Hello"}
+con.connect(function(err) {
+  if (err) throw err;
+});
+
+//const bob = {message:"Hello"}
 app.get('/search', async (_,res) =>{
 console.log("Search")
 res.send(bob)
+})
+
+app.get('/toplists', async (_,res) =>{
+  
+  
+    con.query("SELECT * FROM FavoriteTable", function (err, result, fields) {
+      if (err) throw err;
+     //console.log(result);
+      res.send(result)
+    });
+ 
+  
+})
+
+app.post('/addToToplist', async (req, res)=>{
+  const resp = {message:"Post successful"}
+  
+  console.log("Responce: "+req.body.userID +" "+ req.body.movieID)
+
+  var sql = "INSERT INTO FavoriteTable (UserID, MovieID) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+  
+  
+  res.status(201)
+  res.send(resp)
+
+})
+
+app.get('/searchById/:user', async (req ,res) =>{
+  const user = req.params.user
+  console.log(user)
+  //res.send(user)
+
+con.query("SELECT * FROM FavoriteTable WHERE MovieID ='112'", function (err, result, fields) {
+      if (err) throw err;
+     //console.log(result);
+      res.send(result)
+    });
+
 })
 
 app.get('/', async (req, res) => {

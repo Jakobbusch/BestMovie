@@ -5,11 +5,6 @@ import { getAuth, signInWithRedirect , GoogleAuthProvider, onAuthStateChanged ,s
 export default (el, init_model) => {
     let model = init_model
 
-
-    
-      
-    
-    
     const firebaseConfig = {
         apiKey: "AIzaSyBjMvVKgFVEr2XHD8t3Ot5ukXFO9W4MUDk",
         authDomain: "semester6project.firebaseapp.com",
@@ -67,6 +62,7 @@ return {
     data:{
         movieTitle:'',
         movie: model.movie,
+        toplist: model.moviefromDb,
         userdata:''
         
     },
@@ -75,7 +71,7 @@ return {
     
     methods:{
         async writeToConsole(){
-                this.movie = [{Title: 'bubaboba', Released: '1997'},
+                this.toplist = [{Title: 'bubaboba', Released: '1997'},
                 {Title: 'hasdas', Released: '1991'},
                 {Title: 'fgdasda', Released: '1990'}]
             
@@ -98,13 +94,45 @@ return {
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
+            const data = {userID:"Mathias", movieID: this.movie.imdbID.split("tt").pop()}
+            console.log(data)
+    
+        fetch('/addToToplist', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
         }
 
-        //const res = await fetch('http://localhost:8080/search', {method: 'GET'})
+        /*
         const res = await fetch('http://localhost:8080/search').then(res => res.json())
         console.log("responce: ")
         console.log(res)
-        
+        */
+
+        /*
+        const res = await fetch('http://localhost:8080/toplists').then(res => res.json())
+        console.log("responce: ")
+        console.log(res)
+        this.toplist = res;
+        */
+
+       /*
+       const res = await fetch('/searchById/mathias').then(res => res.json())
+        console.log("responce: ")
+        console.log(res)
+        this.toplist = res;
+         */
         
     },
     

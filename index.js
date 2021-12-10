@@ -26,51 +26,10 @@ const con = mysql.createConnection({
   database: "MyDB",
 });
 
-app.get('/search',async (req,res) =>{
-
-  if (!template) {
-    // Load Handlebars template from filesystem and compile for use.
-    try {
-      template = handlebars.compile(readFileSync('Views/index.html.hbs', 'utf8'));
-    } catch (e) {
-      console.error(e);
-      res.status(500).send('Internal Server Error');
-    }
-  }
-
-  console.log("HEllo from search")
-  con.connect(function (err) {
-    data.maybe = "yes";
-    if (err) data.maybe = err.toString();
-
-    con.query("SELECT * FROM FavoriteTable", function (err, result) {
-      if (err) throw err;
-      data.maybe = result;
-      data.maybe = data.maybe.map(function (item) {
-        return item.MovieID;
-      });
-      // Apply the template to the parameters to generate an HTML string.
-      try {
-        const output = template(data);
-        res.status(200).send(output);
-        console.log(data)
-      } catch (e) {
-        console.error(e);
-        res.status(500).send("Internal Server Error");
-      }
-    });
-  });
-  try {
-    const output = template(data);
-    res.status(200).send(output);
-    console.log(data)
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("Internal Server Error");
-  }
-
-  console.log(req.body.titlesearch)
-
+const bob = {message:"Hello"}
+app.get('/search', async (_,res) =>{
+console.log("Search")
+res.send(bob)
 })
 
 app.get('/', async (req, res) => {

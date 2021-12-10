@@ -37,6 +37,12 @@ return {
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
         }
+
+        //const res = await fetch('http://localhost:8080/search', {method: 'GET'})
+        const res = await fetch('http://localhost:8080/search').then(res => res.json())
+        console.log("responce: ")
+        console.log(res)
+        
         
     }
 

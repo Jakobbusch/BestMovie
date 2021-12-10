@@ -42,7 +42,7 @@ res.send(bob)
 app.get('/toplists', async (_,res) =>{
   
   
-    con.query("SELECT * FROM FavoriteTable", function (err, result, fields) {
+    con.query("SELECT * FROM FavoriteTable where UserID = 'Mathias'", function (err, result, fields) {
       if (err) throw err;
      //console.log(result);
       res.send(result)

@@ -94,7 +94,7 @@ return {
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
-            const data = {userID:"Mathias", movieID: this.movie.imdbID.split("tt").pop()}
+            const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop()}
             console.log(data)
     
         fetch('/addToToplist', {

@@ -114,6 +114,23 @@ return {
   console.error('Error:', error);
 });
 
+// add user to db
+        
+var data1= {email: userInfo}
+await fetch('/addUser', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data1),
+})
+.then(response => response.json())
+.then(data1 => {
+  console.log('Success:', data1);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
         }
 
         /*
@@ -142,7 +159,8 @@ return {
         console.log("Hello from google")
         signInWithRedirect(auth, provider); 
         this.userdata = userInfo
-      
+        console.log("Email: "+userInfo)
+        
       },
 
     async logout() {

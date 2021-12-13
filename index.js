@@ -34,9 +34,27 @@ con.connect(function(err) {
 });
 
 //const bob = {message:"Hello"}
-app.get('/search', async (_,res) =>{
-console.log("Search")
-res.send(bob)
+app.post('/addUser', async (req , res) =>{
+  const resp = {message:"Post successful"}
+console.log("AddUser: "+req.body.email)
+/*
+
+INSERT INTO Users (email)
+SELECT * FROM (SELECT 'gardenhansen97@gmail.com' AS email) AS temp
+WHERE NOT EXISTS (
+    SELECT email FROM Users WHERE email = 'gardenhansen97@gmail.com'
+) LIMIT 1;
+
+*/
+var sql = "INSERT INTO Users (email) SELECT * FROM (SELECT " + "'"+req.body.email+"'"+ " AS email) AS temp WHERE NOT EXISTS (SELECT email FROM Users WHERE email ="+"'"+req.body.email+"'" +") LIMIT 1;"
+//var sql = "INSERT INTO Users (email) VALUES (" + "'" + req.body.email +"'"+")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 user inserted");
+  });
+
+res.status(201)
+  res.send(resp)
 })
 
 app.get('/toplists/:user', async (req,res) =>{
@@ -79,7 +97,6 @@ app.post('/addToToplist', async (req, res)=>{
     if (err) throw err;
     console.log("1 record inserted");
   });
-  
   
   res.status(201)
   res.send(resp)

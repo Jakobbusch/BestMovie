@@ -17,6 +17,7 @@ window.init =async function(){
 	const movie=''
 	const userid=''
 	const toplist =''
+	const otherToplist =''
 	const theModel = model(movie, toplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
@@ -144,7 +145,7 @@ window.init =async function(){
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody>
-		<tr v-for ='t in toplist'>
+		<tr v-for ='t in otherToplist'>
 			<td>\{{t.title}}</td>
 			<td>\{{t.year}}</td>
 

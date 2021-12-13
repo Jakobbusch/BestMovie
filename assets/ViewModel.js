@@ -65,7 +65,8 @@ return {
         toplist: model.moviefromDb,
         userdata:'',
         selected:'1',
-        list:'1'
+        list:'1',
+        otherToplist: model.moviefromDb
         
     },
     
@@ -73,8 +74,12 @@ return {
     
     methods:{
         async writeToConsole(){
-                console.log(this.selected)
-                console.log("List: " + this.list)
+                //console.log(this.selected)
+               // console.log("List: " + this.list)
+               const othertopList = await fetch('/OtherTopLists').then(res => res.json())
+               this.otherToplist = othertopList
+                console.log(othertopList)
+              
             
                 
 

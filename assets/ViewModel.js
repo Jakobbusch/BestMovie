@@ -19,6 +19,7 @@ export default (el, init_model) => {
     const auth = getAuth();
 
         auth.languageCode = 'it';
+        
 
     const provider = new GoogleAuthProvider();
 
@@ -66,7 +67,7 @@ return {
         
     },
     
-    
+   
     
     methods:{
         async writeToConsole(){
@@ -95,6 +96,7 @@ return {
             console.log(this.movie.Title + ' Added to favourites')
             const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop()}
             console.log(data)
+            console.log("UserData: " + this.userdata)
     
         fetch('/addToToplist', {
   method: 'POST', // or 'PUT'

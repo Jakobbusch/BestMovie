@@ -67,7 +67,10 @@ app.get('/toplists/:user', async (req,res) =>{
   console.log("User: "+user + " List: " + list)
   var sql = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ user+"'" +"AND List =" +"'"+ list+"'";
   
+
     con.query(sql, function (err, result, fields) {
+
+
       if (err) throw err;
       var sql1 = "SELECT title, year FROM movies WHERE id = "
       for (let i = 0; i < result.length; i++) {

@@ -39,24 +39,42 @@ console.log("Search")
 res.send(bob)
 })
 
-app.get('/toplists', async (_,res) =>{
+app.get('/toplists/:user', async (req,res) =>{
+  var params=req.params.user
+  var arr = params.split('+').map(function (val){
+    return String(val);
+  })
+  var user = arr[0]
+  var list = arr[1]
+  console.log("User: "+user + " List: " + list)
+  var sql = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ user+"'" +"AND List =" +"'"+ list+"'";
   
-  
-    con.query("SELECT * FROM FavoriteTable", function (err, result, fields) {
+    con.query(sql, function (err, result, fields) {
       if (err) throw err;
-     //console.log(result);
-      res.send(result)
+      var sql1 = "SELECT title, year FROM movies WHERE id = "
+      for (let i = 0; i < result.length; i++) {
+        if(i+1 ==result.length){
+          sql1+=result[i].MovieID
+        } else{
+          sql1+=result[i].MovieID + " OR id ="
+        } 
+      }
+     console.log(sql1);
+     con.query(sql1, function (err, result1, fields) {
+       console.log(result1)
+      res.send(result1)
+     })
+
+      
     });
- 
-  
 })
 
 app.post('/addToToplist', async (req, res)=>{
   const resp = {message:"Post successful"}
   
-  console.log("Responce: "+req.body.userID +" "+ req.body.movieID)
+  console.log("Responce: "+req.body.userID +" "+ req.body.movieID + req.body.list)
 
-  var sql = "INSERT INTO FavoriteTable (UserID, MovieID) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ")";
+  var sql = "INSERT INTO FavoriteTable (UserID, MovieID, List) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ","+ req.body.list+")";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");

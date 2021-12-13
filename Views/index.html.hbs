@@ -16,12 +16,12 @@ window.init =async function(){
 	
 	const movie=''
 	const userid=''
-	const toplist = await fetch('http://localhost:8080/toplists').then(res => res.json())
+	const toplist =''
 	const theModel = model(movie, toplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
-	
+	//{{maybe}}
 }
 
 
@@ -31,18 +31,21 @@ window.init =async function(){
 <body onload = "init()">
 	<div id="base">
 
-    {{maybe}}
+ 
   
   
   <div id="loginHide">
 	
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
+ <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage" @click='topList1()'>Profile Page</a></div>
   
 </div>
 
-  
-  	  <button @click='loginGoogle()'>Google Login</button>
+	
+<button @click='loginGoogle()'>Google Login</button>
 		<button @click='logout()'>Logout</button>
+	
+  
+  	  
 
   
   <div class="content" id="loginHide">
@@ -92,6 +95,12 @@ window.init =async function(){
 		</div>
 
 		</div>
+		<div id="FavRadio" style="float: right;">
+		<input v-model:value = "list" type="radio" id="top1" value="1">
+		<label for="top1">Top 1</label>
+		<input v-model:value = "list" type="radio" id="top2" value="2">
+		<label for="top2">Top 2</label>
+		</div>
 		<button id='addToFav' @click='addToFavourite()' style="float: right;">Add to Favorites</button>
 		 
 
@@ -106,19 +115,18 @@ window.init =async function(){
 
 		  <table id="favList">
 			  <h2>Favorite List</h2>
-			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
-        <optgroup label="Select Table">
-            <option name="FavList1" value="0">Fav. List 1</option>
-            <option name="FavList2" value="1">Fav. List 2</option>
+			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @click='topList1()' >
+        <optgroup label="Select List">
+            <option  name="FavList1" value="1">Fav. List 1</option>
+            <option  name="FavList2" value="2">Fav. List 2</option>
         </optgroup>
     </select>
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody id="movieData">
 		<tr v-for ='t in toplist'>
-			<td>\{{t.UserID}}</td>
-			<td>\{{t.MovieID}}</td>
-
+			<td>\{{t.title}}</td>
+			<td>\{{t.year}}</td>
 		</tr>
 	</tbody>
 </table>

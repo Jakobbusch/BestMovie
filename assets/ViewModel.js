@@ -19,6 +19,7 @@ export default (el, init_model) => {
     const auth = getAuth();
 
         auth.languageCode = 'it';
+        
 
     const provider = new GoogleAuthProvider();
 
@@ -46,7 +47,6 @@ export default (el, init_model) => {
         console.log("  Name: " + profile.displayName);
         console.log("  Email: " + profile.email);
         console.log("  Photo URL: " + profile.photoURL);
-        console.log("{{maybe}}");
     });
     }
     } else {
@@ -67,7 +67,7 @@ return {
         
     },
     
-    
+   
     
     methods:{
         async writeToConsole(){
@@ -96,6 +96,7 @@ return {
             console.log(this.movie.Title + ' Added to favourites')
             const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop()}
             console.log(data)
+            console.log("UserData: " + this.userdata)
     
         fetch('/addToToplist', {
   method: 'POST', // or 'PUT'

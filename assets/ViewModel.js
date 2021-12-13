@@ -63,7 +63,9 @@ return {
         movieTitle:'',
         movie: model.movie,
         toplist: model.moviefromDb,
-        userdata:''
+        userdata:'',
+        selected:'1',
+        list:'1'
         
     },
     
@@ -71,9 +73,8 @@ return {
     
     methods:{
         async writeToConsole(){
-                this.toplist = [{Title: 'bubaboba', Released: '1997'},
-                {Title: 'hasdas', Released: '1991'},
-                {Title: 'fgdasda', Released: '1990'}]
+                console.log(this.selected)
+                console.log("List: " + this.list)
             
                 
 
@@ -94,9 +95,9 @@ return {
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
-            const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop()}
+            const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop(),list:this.list}
             console.log(data)
-            console.log("UserData: " + this.userdata)
+            console.log("UserData: " + this.userdata + " List: "+this.list)
     
         fetch('/addToToplist', {
   method: 'POST', // or 'PUT'
@@ -150,6 +151,13 @@ return {
     }).catch((error) => {
       console.log("Error")
         });
+    },
+    async topList1(){
+      console.log("Toplist selected for: " + userInfo +" List: " + this.list)
+      this.toplist = await fetch('/toplists/'+userInfo+"+"+this.selected).then(res => res.json()).catch((error) => {
+        console.log(('Error: No movies in Selected Toplist'));
+      })
+      
     }
 
         

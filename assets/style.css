@@ -70,6 +70,11 @@ a{
 	left: 0px;
 	top: 140px;
   }
+  .child-12 {
+	left: 680px;
+	top: 300px;
+  }
+  
   .container {
 	margin: 30px auto;
 	background: #fff;

@@ -116,7 +116,7 @@ window.init =async function(){
 
 		  <table id="favList">
 			  <h2>Favorite List</h2>
-			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @click='topList1()' >
+			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @change='topList1()' >
         <optgroup label="Select List">
             <option  name="FavList1" value="1">Fav. List 1</option>
             <option  name="FavList2" value="2">Fav. List 2</option>
@@ -136,9 +136,9 @@ window.init =async function(){
 		  <table id="favList">
 			  <h2>user's Favorite List</h2>
 			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
-        <optgroup label="Select Table">
+        <optgroup label="Select User">
             <option name="" value="0">Most Liked List</option>
-            <option v-for='u in users' value=\{{u.email}}>\{{u.email}}</option>
+            <option v-for='u in users'>\{{u.email}}</option>
             
         </optgroup>
     </select>

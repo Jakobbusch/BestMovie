@@ -94,6 +94,14 @@ app.post('/addToToplist', async (req, res)=>{
   res.send(resp)
 
 })
+app.get('/allUsers',async (req,res) =>{
+var sql = "SELECT email FROM Users"
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Users retrieved");
+  res.send(result)
+});
+})
 
 app.get('/OtherTopLists', async (req ,res) =>{
   

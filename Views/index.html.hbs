@@ -13,12 +13,12 @@ import viewModel from "/assets/ViewModel.js"
 
 window.init =async function(){
 	
-	
+	const users= await fetch('/allUsers').then(res => res.json());
 	const movie=''
 	const userid=''
 	const toplist =''
 	const otherToplist =''
-	const theModel = model(movie, toplist)
+	const theModel = model(movie, toplist, users)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
@@ -135,14 +135,13 @@ window.init =async function(){
 	  <div id="otherfavListDiv">
 		  <table id="favList">
 			  <h2>user's Favorite List</h2>
-			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
+			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
         <optgroup label="Select Table">
             <option name="" value="0">Most Liked List</option>
-            <option name="FavList1" value="1">User 1</option>
-            <option name="FavList2" value="2">User 2</option>
+            <option v-for='u in users' value=\{{u.email}}>\{{u.email}}</option>
+            
         </optgroup>
     </select>
-  
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody>
 		<tr v-for ='t in otherToplist'>

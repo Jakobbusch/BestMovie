@@ -65,7 +65,9 @@ return {
         toplist: model.moviefromDb,
         userdata:'',
         selected:'1',
+        selected2:'1',
         list:'1',
+        users:model.users,
         otherToplist: model.moviefromDb
         
     },
@@ -76,12 +78,17 @@ return {
         async writeToConsole(){
                 //console.log(this.selected)
                // console.log("List: " + this.list)
-               const othertopList = await fetch('/OtherTopLists').then(res => res.json())
+               const othertopList = await fetch('/OtherTopLists').then(res => res.json()).catch((error) => {
+                console.error('No movies in toplist');
+              });
                this.otherToplist = othertopList
                 console.log(othertopList)
               
             
-                
+                const users = await fetch('/allUsers').then(res => res.json());
+                console.log("users : "+users[0].email)
+
+                this.users = users;
 
     },
     async search(){
@@ -176,10 +183,14 @@ await fetch('/addUser', {
         });
     },
     async topList1(){
-      console.log("Toplist selected for: " + userInfo +" List: " + this.list)
       this.toplist = await fetch('/toplists/'+userInfo+"+"+this.selected).then(res => res.json()).catch((error) => {
         console.log(('Error: No movies in Selected Toplist'));
       })
+      
+    },
+
+    async otherToplist1(){
+      console.log("Toplist selected for: " + this.selected2)
       
     }
 

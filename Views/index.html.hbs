@@ -94,6 +94,16 @@ window.init =async function(){
 		<div id='rel' class="child child-9">
 				<img id='poster'v-bind:src='movie.Poster'>
 		</div>
+		<div id='rel' class="child child-10">
+			<table>
+				<thead><tr><td>Actor</td><td>Avg Rating</td></tr></thead>
+				<tbody id="avg">
+					<tr><td>\{{stars.actor1}}</td><td>\{{actors.actor1}}</td></tr>
+					<tr><td>\{{stars.actor2}}</td><td>\{{actors.actor2}}</td></tr>
+					<tr><td>\{{stars.actor3}}</td><td>\{{actors.actor3}}</td></tr>
+				</tbody>
+			</table>
+		</div>
 
 		</div>
 		<div id="FavRadio" style="float: right;">

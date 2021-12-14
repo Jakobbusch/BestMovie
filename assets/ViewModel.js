@@ -68,7 +68,9 @@ return {
         selected2:'1',
         list:'1',
         users:model.users,
-        otherToplist: model.moviefromDb
+        otherToplist: model.moviefromDb,
+        actors:'',
+        stars:''
         
     },
     
@@ -84,11 +86,15 @@ return {
                this.otherToplist = othertopList
                 console.log(othertopList)
               
-            
-                const users = await fetch('/allUsers').then(res => res.json());
-                console.log("users : "+users[0].email)
+            //const users = await fetch('/allUsers').then(res => res.json());
+                //console.log("users : "+users[0].email)
 
-                this.users = users;
+                //this.users = users;
+
+                
+                
+                
+                
 
     },
     async search(){
@@ -99,6 +105,20 @@ return {
             //console.log(this.movie.Released)
             console.log(this.movie)
             this.movieTitle = null;
+
+            var temp =this.movie.Actors
+            var temp1 = temp.split(', ').map(function (val){
+            return String(val);})
+            
+            
+            this.stars = {actor1:temp1[0],actor2:temp1[1],actor3:temp1[2]}
+            
+
+            const actors = await fetch('/actors/'+this.movie.Actors).then(res => res.json())
+                console.log(actors)
+                const temp2 = {actor1:actors[0].toFixed(2),actor2:actors[1].toFixed(2),actor3:actors[2].toFixed(2)}
+                this.actors = temp2;
+
         }
         
         
@@ -144,26 +164,6 @@ await fetch('/addUser', {
   console.error('Error:', error);
 });
         }
-
-        /*
-        const res = await fetch('http://localhost:8080/search').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        */
-
-        /*
-        const res = await fetch('http://localhost:8080/toplists').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        this.toplist = res;
-        */
-
-       /*
-       const res = await fetch('/searchById/mathias').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        this.toplist = res;
-         */
         
     },
     

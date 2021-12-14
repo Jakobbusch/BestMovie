@@ -50,15 +50,47 @@ a{
 	top: 70px;
   }
   .child-8 {
-	left: 170px;
+	left: 680px;
 	top: 70px;
-  }
+  }	
   .child-9 {
 	left: 340px;
 	top: 70px;
   }
+  .child-10 {
+	left: 170px;
+	top: 450px;
+	width: 680px;
+  }
   
-  
+  .container {
+	margin: 30px auto;
+	background: #fff;
+	border-radius: 8px;
+	padding: 20px;
+}
+.comment {
+	display: block;
+	transition: all 1s;
+}
+.commentClicked {
+	min-height: 0px;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	padding: 5px 10px
+}
+.container textarea {
+	width: 100%;
+	border: none;
+	background: #E8E8E8;
+	padding: 5px;
+	height: 50%;
+	border-radius: 5px;
+	border-bottom: 2px solid #016BA8;
+	transition: all 0.5s;
+	margin-right: 25px;
+}
+
   .parent {
 	position: relative;
 	margin-left: 250px;
@@ -176,7 +208,9 @@ body {
 	
 
   }
-
+		#pcomment{
+		color: #000000;
+	}
   footer{
 	
 	position: fixed;

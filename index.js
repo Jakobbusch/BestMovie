@@ -5,7 +5,8 @@ const browserify = require("browserify");
 const { connect } = require("http2");
 const mysql = require("mysql");
 const { waitForDebugger } = require('inspector');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const req = require('express/lib/request');
 
 const app = express();
 app.use(bodyParser.json());
@@ -49,6 +50,36 @@ app.get('/toplists', async (_,res) =>{
     });
  
   
+})
+
+app.get('/getComment/:movie_id', async (req,res) =>{
+  
+  console.log("!!!!!!!!!!!!!!!!!:" + req.params.movie_id)
+  
+  con.query("SELECT * FROM comments where movie_id = " + "'" + req.params.movie_id+ "'", function (err, result, fields) {
+    if (err) throw err;
+   //console.log(result);
+    res.send(result)
+  }); 
+
+
+})
+
+app.post('/addComment', async (req, res)=>{
+  const resp = {message:"Post successful"}
+  
+  console.log("Responce: "+req.body.user_id +" "+ req.body.movie_id+" "+ req.body.comment)
+
+  var sql = "INSERT INTO comments (user_id, movie_id,  comment) VALUES (" + "'" + req.body.user_id +"'" + ","+"'" + req.body.movie_id +"'" + ","+ "'" + req.body.comment + "'" + ")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+  
+  
+  res.status(201)
+  res.send(resp)
+
 })
 
 app.post('/addToToplist', async (req, res)=>{

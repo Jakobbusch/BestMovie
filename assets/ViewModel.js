@@ -30,7 +30,7 @@ export default (el, init_model) => {
     const user = auth.currentUser;
 
     var userInfo ='';
-
+    var userName ='';
     onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
@@ -40,6 +40,7 @@ export default (el, init_model) => {
         if (user !== null) {
         user.providerData.forEach((profile) => {
         userInfo = profile.email;
+        userName = profile.displayName;
         document.getElementById('loginHide').style.visibility = 'visible';
         console.log("Sign-in provider: " + profile.providerId);
         console.log("  Provider-specific UID: " + profile.uid);
@@ -63,7 +64,9 @@ return {
         movieTitle:'',
         movie: model.movie,
         toplist: model.moviefromDb,
-        userdata:''
+        userdata:'',
+        commentText:'',
+        getComment: model.getComment
         
     },
     
@@ -86,11 +89,17 @@ return {
             //console.log(this.movie.Released)
             console.log(this.movie)
             this.movieTitle = null;
+            const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
+            console.log(comment_res)
+           this.getComment = comment_res;
+           console.log(this.getComment)
+             
         }
         
         
         
     },
+
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
@@ -149,6 +158,39 @@ return {
     }).catch((error) => {
       console.log("Error")
         });
+    },
+    async addComment(){
+        console.log("Hello " + this.commentText)
+        console.log(this.movie.Title)
+        if(this.movie.Title!=undefined){
+            console.log("Added comment: " + this.commentText)
+            console.log("to this movie: " + this.movie.Title)
+            console.log("From this user: " + userName)
+            const data = {user_id:userName, movie_id: this.movie.imdbID.split("tt").pop(), comment:this.commentText}
+            console.log(data)
+    
+        fetch('/addComment', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+      const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
+                      console.log(comment_res)
+                    this.getComment = comment_res;
+                    this.commentText = null;
+         
+        }
+
     }
 
         

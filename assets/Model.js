@@ -1,4 +1,4 @@
-const model = (movie, moviefromDb, users, otherToplist, filter =() => true) =>{
+const model = (movie, moviefromDb,getComment, users, otherToplist, filter =() => true) =>{
     const movieDetailsMap ={}
     //movie.foreach(m => movieDetailsMap[m.title] = m)
     
@@ -9,7 +9,7 @@ const model = (movie, moviefromDb, users, otherToplist, filter =() => true) =>{
 
     const otherMovieMap={}
 
-    return {movie, moviefromDb, users, otherToplist}
+    return {movie, moviefromDb,getComment, users, otherToplist}
 }
 
 export default model

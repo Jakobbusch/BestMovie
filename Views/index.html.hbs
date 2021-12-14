@@ -2,7 +2,7 @@
 <html>
 <head>
 <link href="/assets/style.css" rel="stylesheet" type="text/css" />
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src ="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script type="module" >
 
@@ -18,7 +18,8 @@ window.init =async function(){
 	const userid=''
 	const toplist =''
 	const otherToplist =''
-	const theModel = model(movie, toplist, users, otherToplist)
+	const getComment =''
+	const theModel = model(movie, toplist, getComment, users, otherToplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
@@ -95,6 +96,36 @@ window.init =async function(){
 				<img id='poster'v-bind:src='movie.Poster'>
 		</div>
 		<div id='rel' class="child child-10">
+			
+
+		
+      <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="comment">
+		<table>
+		<tbody>
+		<tr v-for ='c in getComment' >
+			<td id="pcomment">\{{c.user_id}}</td>
+			<td id="pcomment">\{{c.comment}}</td>
+		</tr>
+		</table>
+	</tbody>
+      <div class="row">
+        <div class="col-6">
+      <textarea type="text" class="input" placeholder="Write a comment" v-model:value='commentText'></textarea>
+          <button v-on:click="addComment()" class='primaryContained float-right' type="submit">Add Comment</button>
+        </div>
+      </div>
+    </div>
+
+
+
+		</div>
+
+		</div>
+	  </div>
+	  </div>
 			<table>
 				<thead><tr><td>Actor</td><td>Avg Rating</td></tr></thead>
 				<tbody id="avg">

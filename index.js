@@ -35,21 +35,49 @@ con.connect(function(err) {
 });
 
 //const bob = {message:"Hello"}
-app.get('/search', async (_,res) =>{
-console.log("Search")
-res.send(bob)
+app.post('/addUser', async (req , res) =>{
+  const resp = {message:"Post successful"}
+console.log("AddUser: "+req.body.email)
+var sql = "INSERT INTO Users (email) SELECT * FROM (SELECT " + "'"+req.body.email+"'"+ " AS email) AS temp WHERE NOT EXISTS (SELECT email FROM Users WHERE email ="+"'"+req.body.email+"'" +") LIMIT 1;"
+//var sql = "INSERT INTO Users (email) VALUES (" + "'" + req.body.email +"'"+")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+
+res.status(201)
+  res.send(resp)
 })
 
-app.get('/toplists', async (_,res) =>{
-  
-  
-    con.query("SELECT * FROM FavoriteTable where UserID = 'Mathias'", function (err, result, fields) {
+app.get('/toplists/:user', async (req,res) =>{
+  var params=req.params.user
+  var arr = params.split('+').map(function (val){
+    return String(val);
+  })
+  var user = arr[0]
+  var list = arr[1]
+  //console.log("User: "+user + " List: " + list)
+  var sql = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ user+"'" +"AND List =" +"'"+ list+"'";
+
+    con.query(sql, function (err, result, fields) {
+
+
       if (err) throw err;
-     //console.log(result);
-      res.send(result)
+      var sql1 = "SELECT title, year FROM movies WHERE id = "
+      for (let i = 0; i < result.length; i++) {
+        if(i+1 ==result.length){
+          sql1+=result[i].MovieID
+        } else{
+          sql1+=result[i].MovieID + " OR id ="
+        } 
+      }
+     //console.log(sql1);
+     con.query(sql1, function (err, result1, fields) {
+      // console.log(result1)
+      res.send(result1)
+     })
+
+      
     });
- 
-  
 })
 
 app.get('/getComment/:movie_id', async (req,res) =>{
@@ -85,31 +113,57 @@ app.post('/addComment', async (req, res)=>{
 app.post('/addToToplist', async (req, res)=>{
   const resp = {message:"Post successful"}
   
-  console.log("Responce: "+req.body.userID +" "+ req.body.movieID)
+  //console.log("Responce: "+req.body.userID +" "+ req.body.movieID + req.body.list)
 
-  var sql = "INSERT INTO FavoriteTable (UserID, MovieID) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ")";
+  var sql = "INSERT INTO FavoriteTable (UserID, MovieID, List) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ","+ req.body.list+")";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("1 record inserted");
+   // console.log("1 record inserted");
   });
-  
   
   res.status(201)
   res.send(resp)
 
 })
+app.get('/allUsers',async (req,res) =>{
+var sql = "SELECT email FROM Users"
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  //console.log("Users retrieved");
+  res.send(result)
+});
+})
 
-app.get('/searchById/:user', async (req ,res) =>{
-  const user = req.params.user
-  console.log(user)
-  //res.send(user)
-
-con.query("SELECT * FROM FavoriteTable WHERE MovieID ='112'", function (err, result, fields) {
+app.get('/OtherTopLists', async (req ,res) =>{
+  
+var sql = "select email, `List 1 likes` from Users WHERE `List 1 likes` =(select MAX(`List 1 likes`) from Users)"
+con.query(sql, function (err, result, fields) {
       if (err) throw err;
-     //console.log(result);
-      res.send(result)
-    });
+     //console.log("Result: "+result[0].email);
+     var sql1 = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ result[0].email+"'" +"AND List = 1" 
+     con.query(sql1, function (err, result1, fields) {
+      if (err) throw err;
+     //console.log(result1);
+     
+     var sql2 = "SELECT title, year FROM movies WHERE id = "
+      for (let i = 0; i < result1.length; i++) {
+        if(i+1 ==result1.length){
+          sql2+=result1[i].MovieID
+        } else{
+          sql2+=result1[i].MovieID + " OR id ="
+        } 
+      }
+    // console.log(sql2);
+     con.query(sql2, function (err, result2, fields) {
+      // console.log(result2)
+      res.send(result2)
+     })
 
+
+    });
+      
+    });
+    
 })
 
 app.get('/', async (req, res) => {
@@ -149,7 +203,7 @@ app.get('/', async (req, res) => {
       try {
         const output = template(data);
         res.status(200).send(output);
-        console.log(data)
+        //console.log(data)
       } catch (e) {
         console.error(e);
         res.status(500).send("Internal Server Error");
@@ -158,16 +212,82 @@ app.get('/', async (req, res) => {
   });
 });
 
-function calldatabase(){
-  console.log("METHOD IN INDEXJS")
-}
 
-module.exports = calldatabase;
+
+app.get('/actors/:actors',async (req, res) =>{
+  var avg=0
+  var theAverage = {0:0, 1:0, 2:0};
+  
+
+  
+  var actors=req.params.actors
+  var arr = actors.split(', ').map(function (val){
+    return String(val);
+  })
+  console.log("Length of actors: "+arr.length)
+  
+
+  for (let i = 0; i < arr.length; i++) {
+    avg =0;
+    
+    var sql = ("SELECT id FROM people WHERE name = "+ "'" +arr[i] + "'")
+  
+  con.query(sql, function (err, result, fields) {
+    if (err) throw err;
+   
+   var sql1 = "SELECT movie_id FROM stars WHERE person_id = " + result[0].id + ";"
+   
+
+   
+   con.query(sql1, function (err, result1, fields) {
+    //console.log(result1) // list of movie id's
+
+    var sql2 = "SELECT rating FROM ratings WHERE movie_id = "
+
+    for (let a = 0; a < result1.length; a++) {
+      if(a+1 == result1.length){
+        sql2+=result1[a].movie_id
+      }else{
+        sql2+=result1[a].movie_id + " OR movie_id = "
+      }
+      
+    }
+    //console.log(sql2)
+    
+    con.query(sql2, function (err, result2, fields) {
+      // list of avg
+    
+
+    for (let b = 0; b < result2.length; b++) {
+      avg+=result2[b].rating
+      
+    }
+    avg = avg/result2.length
+    theAverage[i] = avg
+    console.log("The average: "+avg)
+    console.log("The variable  "+theAverage[i])
+
+      if(i+1 == arr.length){
+        console.log("End: "+theAverage)
+
+        res.send(theAverage)
+      }
+  })
+})
+  
+})
+    
+  }
+  
+})
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(
     `Hello from Cloud Run! The container started successfully and is listening for HTTP requests on ${PORT}`
   );
+
+  
 });
 

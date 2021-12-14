@@ -13,15 +13,17 @@ import viewModel from "/assets/ViewModel.js"
 
 window.init =async function(){
 	
-	
+	const users= await fetch('/allUsers').then(res => res.json());
 	const movie=''
-	const toplist = await fetch('/toplists').then(res => res.json())
+	const userid=''
+	const toplist =''
+	const otherToplist =''
 	const getComment =''
-	const theModel = model(movie, toplist,getComment)
+	const theModel = model(movie, toplist, getComment, users, otherToplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
-
+	//{{maybe}}
 }
 
 
@@ -31,18 +33,21 @@ window.init =async function(){
 <body onload = "init()">
 	<div id="base">
 
-
+ 
   
   
   <div id="loginHide">
 	
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage">Profile Page</a></div>
+ <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage" @click='topList1(); otherToplist1()'>Profile Page</a></div>
   
 </div>
 
-  
-  	  <button @click='loginGoogle()'>Google Login</button>
+	
+<button @click='loginGoogle()'>Google Login</button>
 		<button @click='logout()'>Logout</button>
+	
+  
+  	  
 
   
   <div class="content" id="loginHide">
@@ -121,6 +126,23 @@ window.init =async function(){
 		</div>
 	  </div>
 	  </div>
+			<table>
+				<thead><tr><td>Actor</td><td>Avg Rating</td></tr></thead>
+				<tbody id="avg">
+					<tr><td>\{{stars.actor1}}</td><td>\{{actors.actor1}}</td></tr>
+					<tr><td>\{{stars.actor2}}</td><td>\{{actors.actor2}}</td></tr>
+					<tr><td>\{{stars.actor3}}</td><td>\{{actors.actor3}}</td></tr>
+				</tbody>
+			</table>
+		</div>
+
+		</div>
+		<div id="FavRadio" style="float: right;">
+		<input v-model:value = "list" type="radio" id="top1" value="1">
+		<label for="top1">Top 1</label>
+		<input v-model:value = "list" type="radio" id="top2" value="2">
+		<label for="top2">Top 2</label>
+		</div>
 		<button id='addToFav' @click='addToFavourite()' style="float: right;">Add to Favorites</button>
 		 
 
@@ -135,19 +157,18 @@ window.init =async function(){
 
 		  <table id="favList">
 			  <h2>Favorite List</h2>
-			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
-        <optgroup label="Select Table">
-            <option name="FavList1" value="0">Fav. List 1</option>
-            <option name="FavList2" value="1">Fav. List 2</option>
+			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @change='topList1()' >
+        <optgroup label="Select List">
+            <option  name="FavList1" value="1">Fav. List 1</option>
+            <option  name="FavList2" value="2">Fav. List 2</option>
         </optgroup>
     </select>
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody id="movieData">
 		<tr v-for ='t in toplist'>
-			<td>\{{t.UserID}}</td>
-			<td>\{{t.MovieID}}</td>
-
+			<td>\{{t.title}}</td>
+			<td>\{{t.year}}</td>
 		</tr>
 	</tbody>
 </table>
@@ -155,19 +176,18 @@ window.init =async function(){
 	  <div id="otherfavListDiv">
 		  <table id="favList">
 			  <h2>user's Favorite List</h2>
-			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
-        <optgroup label="Select Table">
-            <option name="" value="0">Most Liked List</option>
-            <option name="FavList1" value="1">User 1</option>
-            <option name="FavList2" value="2">User 2</option>
+			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
+        <optgroup label="Select User">
+            <option name="" value="1">Most Liked List</option>
+            <option v-for='u in users'>\{{u.email}}</option>
+            
         </optgroup>
     </select>
-  
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody>
-		<tr v-for ='m in movie'>
-			<td>\{{m.Title}}</td>
-			<td>\{{m.Released}}</td>
+		<tr v-for ='t in otherToplist'>
+			<td>\{{t.title}}</td>
+			<td>\{{t.year}}</td>
 
 		</tr>
 	</tbody>

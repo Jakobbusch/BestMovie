@@ -19,6 +19,7 @@ export default (el, init_model) => {
     const auth = getAuth();
 
         auth.languageCode = 'it';
+        
 
     const provider = new GoogleAuthProvider();
 
@@ -47,7 +48,6 @@ export default (el, init_model) => {
         console.log("  Name: " + profile.displayName);
         console.log("  Email: " + profile.email);
         console.log("  Photo URL: " + profile.photoURL);
-        console.log("{{maybe}}");
     });
     }
     } else {
@@ -66,18 +66,37 @@ return {
         toplist: model.moviefromDb,
         userdata:'',
         commentText:'',
-        getComment: model.getComment
+        getComment: model.getComment,
+        selected:'1',
+        selected2:'1',
+        list:'1',
+        users:model.users,
+        otherToplist: model.moviefromDb,
+        actors:'',
+        stars:''
         
     },
     
-    
+   
     
     methods:{
         async writeToConsole(){
-                this.toplist = [{Title: 'bubaboba', Released: '1997'},
-                {Title: 'hasdas', Released: '1991'},
-                {Title: 'fgdasda', Released: '1990'}]
-            
+                //console.log(this.selected)
+               // console.log("List: " + this.list)
+               const othertopList = await fetch('/OtherTopLists').then(res => res.json()).catch((error) => {
+                console.error('No movies in toplist');
+              });
+               this.otherToplist = othertopList
+                console.log(othertopList)
+              
+            //const users = await fetch('/allUsers').then(res => res.json());
+                //console.log("users : "+users[0].email)
+
+                //this.users = users;
+
+                
+                
+                
                 
 
     },
@@ -94,6 +113,20 @@ return {
            this.getComment = comment_res;
            console.log(this.getComment)
              
+
+            var temp =this.movie.Actors
+            var temp1 = temp.split(', ').map(function (val){
+            return String(val);})
+            
+            
+            this.stars = {actor1:temp1[0],actor2:temp1[1],actor3:temp1[2]}
+            
+
+            const actors = await fetch('/actors/'+this.movie.Actors).then(res => res.json())
+                console.log(actors)
+                const temp2 = {actor1:actors[0].toFixed(2),actor2:actors[1].toFixed(2),actor3:actors[2].toFixed(2)}
+                this.actors = temp2;
+
         }
         
         
@@ -103,8 +136,9 @@ return {
     async addToFavourite(){
         if(this.movie.Title!=undefined){
             console.log(this.movie.Title + ' Added to favourites')
-            const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop()}
+            const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop(),list:this.list}
             console.log(data)
+            console.log("UserData: " + this.userdata + " List: "+this.list)
     
         fetch('/addToToplist', {
   method: 'POST', // or 'PUT'
@@ -121,27 +155,24 @@ return {
   console.error('Error:', error);
 });
 
+// add user to db
+        
+var data1= {email: userInfo}
+await fetch('/addUser', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data1),
+})
+.then(response => response.json())
+.then(data1 => {
+  console.log('Success:', data1);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
         }
-
-        /*
-        const res = await fetch('http://localhost:8080/search').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        */
-
-        /*
-        const res = await fetch('http://localhost:8080/toplists').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        this.toplist = res;
-        */
-
-       /*
-       const res = await fetch('/searchById/mathias').then(res => res.json())
-        console.log("responce: ")
-        console.log(res)
-        this.toplist = res;
-         */
         
     },
     
@@ -149,7 +180,8 @@ return {
         console.log("Hello from google")
         signInWithRedirect(auth, provider); 
         this.userdata = userInfo
-      
+        console.log("Email: "+userInfo)
+        
       },
 
     async logout() {
@@ -190,11 +222,32 @@ return {
                     this.commentText = null;
          
         }
+      },
+    async topList1(){
+      this.toplist = await fetch('/toplists/'+userInfo+"+"+this.selected).then(res => res.json()).catch((error) => {
+        console.log(('Error: No movies in Selected Toplist'));
+      })
+      
+    },
 
+    async otherToplist1(){
+      console.log("Toplist selected for: " + this.selected2)
+      if(this.selected2 == 1){
+        console.log(this.selected2 + " first ")
+        this.otherToplist = await fetch('/OtherTopLists').then(res => res.json());
+      }else{
+        console.log(this.selected2 + " other than first ")
+        this.otherToplist = await fetch('/toplists/'+this.selected2+"+"+1).then(res => res.json()).catch((error) => {
+          console.log(('Error: No movies in Selected Toplist'));
+        })
+      }
+      
+
+      
     }
 
-        
-    }
+  }   
     
-}
+    
+  }
 }

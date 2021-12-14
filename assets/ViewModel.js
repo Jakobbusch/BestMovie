@@ -65,7 +65,10 @@ return {
         toplist: model.moviefromDb,
         userdata:'',
         selected:'1',
-        list:'1'
+        selected2:'Most Liked List',
+        list:'1',
+        users:model.users,
+        otherToplist: model.moviefromDb
         
     },
     
@@ -73,10 +76,19 @@ return {
     
     methods:{
         async writeToConsole(){
-                console.log(this.selected)
-                console.log("List: " + this.list)
+                //console.log(this.selected)
+               // console.log("List: " + this.list)
+               const othertopList = await fetch('/OtherTopLists').then(res => res.json()).catch((error) => {
+                console.error('No movies in toplist');
+              });
+               this.otherToplist = othertopList
+                console.log(othertopList)
+              
             
-                
+                const users = await fetch('/allUsers').then(res => res.json());
+                console.log("users : "+users[0].email)
+
+                this.users = users;
 
     },
     async search(){
@@ -114,6 +126,23 @@ return {
   console.error('Error:', error);
 });
 
+// add user to db
+        
+var data1= {email: userInfo}
+await fetch('/addUser', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data1),
+})
+.then(response => response.json())
+.then(data1 => {
+  console.log('Success:', data1);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
         }
 
         /*
@@ -142,7 +171,8 @@ return {
         console.log("Hello from google")
         signInWithRedirect(auth, provider); 
         this.userdata = userInfo
-      
+        console.log("Email: "+userInfo)
+        
       },
 
     async logout() {
@@ -153,10 +183,18 @@ return {
         });
     },
     async topList1(){
-      console.log("Toplist selected for: " + userInfo +" List: " + this.list)
       this.toplist = await fetch('/toplists/'+userInfo+"+"+this.selected).then(res => res.json()).catch((error) => {
         console.log(('Error: No movies in Selected Toplist'));
       })
+      
+    },
+
+    async otherToplist1(){
+      console.log("Toplist selected for: " + this.selected2)
+      this.otherToplist = await fetch('/toplists/'+this.selected2+"+"+1).then(res => res.json()).catch((error) => {
+        console.log(('Error: No movies in Selected Toplist'));
+      })
+
       
     }
 

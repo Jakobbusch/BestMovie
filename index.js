@@ -34,9 +34,17 @@ con.connect(function(err) {
 });
 
 //const bob = {message:"Hello"}
-app.get('/search', async (_,res) =>{
-console.log("Search")
-res.send(bob)
+app.post('/addUser', async (req , res) =>{
+  const resp = {message:"Post successful"}
+console.log("AddUser: "+req.body.email)
+var sql = "INSERT INTO Users (email) SELECT * FROM (SELECT " + "'"+req.body.email+"'"+ " AS email) AS temp WHERE NOT EXISTS (SELECT email FROM Users WHERE email ="+"'"+req.body.email+"'" +") LIMIT 1;"
+//var sql = "INSERT INTO Users (email) VALUES (" + "'" + req.body.email +"'"+")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+
+res.status(201)
+  res.send(resp)
 })
 
 app.get('/toplists/:user', async (req,res) =>{
@@ -48,7 +56,6 @@ app.get('/toplists/:user', async (req,res) =>{
   var list = arr[1]
   console.log("User: "+user + " List: " + list)
   var sql = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ user+"'" +"AND List =" +"'"+ list+"'";
-  
 
     con.query(sql, function (err, result, fields) {
 
@@ -83,23 +90,49 @@ app.post('/addToToplist', async (req, res)=>{
     console.log("1 record inserted");
   });
   
-  
   res.status(201)
   res.send(resp)
 
 })
+app.get('/allUsers',async (req,res) =>{
+var sql = "SELECT email FROM Users"
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log("Users retrieved");
+  res.send(result)
+});
+})
 
-app.get('/searchById/:user', async (req ,res) =>{
-  const user = req.params.user
-  console.log(user)
-  //res.send(user)
-
-con.query("SELECT * FROM FavoriteTable WHERE MovieID ='112'", function (err, result, fields) {
+app.get('/OtherTopLists', async (req ,res) =>{
+  
+var sql = "select email, `List 1 likes` from Users WHERE `List 1 likes` =(select MAX(`List 1 likes`) from Users)"
+con.query(sql, function (err, result, fields) {
       if (err) throw err;
-     //console.log(result);
-      res.send(result)
-    });
+     console.log("Result: "+result[0].email);
+     var sql1 = "SELECT * FROM FavoriteTable WHERE UserID =" +"'"+ result[0].email+"'" +"AND List = 1" 
+     con.query(sql1, function (err, result1, fields) {
+      if (err) throw err;
+     console.log(result1);
+     
+     var sql2 = "SELECT title, year FROM movies WHERE id = "
+      for (let i = 0; i < result1.length; i++) {
+        if(i+1 ==result1.length){
+          sql2+=result1[i].MovieID
+        } else{
+          sql2+=result1[i].MovieID + " OR id ="
+        } 
+      }
+     console.log(sql2);
+     con.query(sql2, function (err, result2, fields) {
+       console.log(result2)
+      res.send(result2)
+     })
 
+
+    });
+      
+    });
+    
 })
 
 app.get('/', async (req, res) => {
@@ -148,11 +181,7 @@ app.get('/', async (req, res) => {
   });
 });
 
-function calldatabase(){
-  console.log("METHOD IN INDEXJS")
-}
 
-module.exports = calldatabase;
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

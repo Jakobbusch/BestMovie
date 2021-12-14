@@ -13,11 +13,12 @@ import viewModel from "/assets/ViewModel.js"
 
 window.init =async function(){
 	
-	
+	const users= await fetch('/allUsers').then(res => res.json());
 	const movie=''
 	const userid=''
 	const toplist =''
-	const theModel = model(movie, toplist)
+	const otherToplist =''
+	const theModel = model(movie, toplist, users)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
@@ -115,7 +116,7 @@ window.init =async function(){
 
 		  <table id="favList">
 			  <h2>Favorite List</h2>
-			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @click='topList1()' >
+			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @change='topList1()' >
         <optgroup label="Select List">
             <option  name="FavList1" value="1">Fav. List 1</option>
             <option  name="FavList2" value="2">Fav. List 2</option>
@@ -134,19 +135,18 @@ window.init =async function(){
 	  <div id="otherfavListDiv">
 		  <table id="favList">
 			  <h2>user's Favorite List</h2>
-			  <select class="selectpicker" data-style="btn-info" name="selectpicker">
-        <optgroup label="Select Table">
+			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
+        <optgroup label="Select User">
             <option name="" value="0">Most Liked List</option>
-            <option name="FavList1" value="1">User 1</option>
-            <option name="FavList2" value="2">User 2</option>
+            <option v-for='u in users'>\{{u.email}}</option>
+            
         </optgroup>
     </select>
-  
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody>
-		<tr v-for ='m in movie'>
-			<td>\{{m.Title}}</td>
-			<td>\{{m.Released}}</td>
+		<tr v-for ='t in otherToplist'>
+			<td>\{{t.title}}</td>
+			<td>\{{t.year}}</td>
 
 		</tr>
 	</tbody>

@@ -18,7 +18,7 @@ window.init =async function(){
 	const userid=''
 	const toplist =''
 	const otherToplist =''
-	const theModel = model(movie, toplist, users)
+	const theModel = model(movie, toplist, users, otherToplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
@@ -37,7 +37,7 @@ window.init =async function(){
   
   <div id="loginHide">
 	
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage" @click='topList1()'>Profile Page</a></div>
+ <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage" @click='topList1(); otherToplist1()'>Profile Page</a></div>
   
 </div>
 
@@ -137,7 +137,7 @@ window.init =async function(){
 			  <h2>user's Favorite List</h2>
 			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
         <optgroup label="Select User">
-            <option name="" value="0">Most Liked List</option>
+            <option name="" value="1">Most Liked List</option>
             <option v-for='u in users'>\{{u.email}}</option>
             
         </optgroup>

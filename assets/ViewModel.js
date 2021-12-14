@@ -65,7 +65,7 @@ return {
         toplist: model.moviefromDb,
         userdata:'',
         selected:'1',
-        selected2:'Most Liked List',
+        selected2:'1',
         list:'1',
         users:model.users,
         otherToplist: model.moviefromDb
@@ -191,9 +191,16 @@ await fetch('/addUser', {
 
     async otherToplist1(){
       console.log("Toplist selected for: " + this.selected2)
-      this.otherToplist = await fetch('/toplists/'+this.selected2+"+"+1).then(res => res.json()).catch((error) => {
-        console.log(('Error: No movies in Selected Toplist'));
-      })
+      if(this.selected2 == 1){
+        console.log(this.selected2 + " first ")
+        this.otherToplist = await fetch('/OtherTopLists').then(res => res.json());
+      }else{
+        console.log(this.selected2 + " other than first ")
+        this.otherToplist = await fetch('/toplists/'+this.selected2+"+"+1).then(res => res.json()).catch((error) => {
+          console.log(('Error: No movies in Selected Toplist'));
+        })
+      }
+      
 
       
     }

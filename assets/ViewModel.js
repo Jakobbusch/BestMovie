@@ -73,7 +73,8 @@ return {
         users:model.users,
         otherToplist: model.moviefromDb,
         actors:'',
-        stars:''
+        stars:'',
+        year:''
         
     },
     
@@ -83,11 +84,13 @@ return {
         async writeToConsole(){
                 //console.log(this.selected)
                // console.log("List: " + this.list)
+               /*
                const othertopList = await fetch('/OtherTopLists').then(res => res.json()).catch((error) => {
                 console.error('No movies in toplist');
               });
                this.otherToplist = othertopList
-                console.log(othertopList)
+                console.log(othertopList)*/
+
               
             //const users = await fetch('/allUsers').then(res => res.json());
                 //console.log("users : "+users[0].email)
@@ -98,39 +101,53 @@ return {
                 
                 
                 
-
-    },
-    async search(){
-        if(this.movieTitle!=''){
-            console.log("hello")
-            const movie_res = await fetch('https://www.omdbapi.com/?apikey=8ea3b105&t='+this.movieTitle).then(res => res.json())
-            this.movie = movie_res
-            //console.log(this.movie.Released)
-            console.log(this.movie)
-            this.movieTitle = null;
-            const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
-            console.log(comment_res)
-           this.getComment = comment_res;
-           console.log(this.getComment)
-             
-
-            var temp =this.movie.Actors
-            var temp1 = temp.split(', ').map(function (val){
-            return String(val);})
-            
-            
-            this.stars = {actor1:temp1[0],actor2:temp1[1],actor3:temp1[2]}
-            
-
-            const actors = await fetch('/actors/'+this.movie.Actors).then(res => res.json())
-                console.log(actors)
-                const temp2 = {actor1:actors[0].toFixed(2),actor2:actors[1].toFixed(2),actor3:actors[2].toFixed(2)}
-                this.actors = temp2;
-
-        }
-        
-        
-        
+                
+                
+                
+                
+              },
+              async search(){
+                if(this.movieTitle!=''){
+                  console.log("hello")
+                  const movie_res = await fetch('https://www.omdbapi.com/?apikey=8ea3b105&t='+this.movieTitle).then(res => res.json())
+                  this.movie = movie_res
+                  //console.log(this.movie.Released)
+                  console.log(this.movie)
+                  this.movieTitle = null;
+                  const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
+                  console.log(comment_res)
+                  this.getComment = comment_res;
+                  console.log(this.getComment)
+                  
+                  
+                  var temp =this.movie.Actors
+                  var temp1 = temp.split(', ').map(function (val){
+                    return String(val);})
+                    
+                    
+                    this.stars = {actor1:temp1[0],actor2:temp1[1],actor3:temp1[2]}
+                    
+                    // get average movie rating for actors
+                    const actors = await fetch('/actors/'+this.movie.Actors).then(res => res.json())
+                    console.log(actors)
+                    const temp2 = {actor1:actors[0].toFixed(2),actor2:actors[1].toFixed(2),actor3:actors[2].toFixed(2)}
+                    this.actors = temp2;
+                    // get yearly average
+                    const yearList = await fetch('/year/' + this.movie.Year).then(res => res.json())
+                  console.log(yearList)
+                  var years = this.movie.Year
+                  this.year = years;
+                  console.log(years)
+                  if(yearList.avg < this.movie.imdbRating){
+                    this.year = {msg:"This movie is rated "+(this.movie.imdbRating-yearList.avg).toFixed(2) +" Above the average movie this year"}
+                  }else{
+                    this.year = {msg:"This movie is rated "+(yearList.avg-this.movie.imdbRating).toFixed(2) +" below the average movie this year"}
+                  }
+                  console.log(this.year.msg)
+                  }
+                  
+                  
+                  
     },
 
     async addToFavourite(){

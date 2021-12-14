@@ -82,7 +82,7 @@ app.get('/toplists/:user', async (req,res) =>{
 
 app.get('/getComment/:movie_id', async (req,res) =>{
   
-  console.log("!!!!!!!!!!!!!!!!!:" + req.params.movie_id)
+  //console.log("!!!!!!!!!!!!!!!!!:" + req.params.movie_id)
   
   con.query("SELECT * FROM comments where movie_id = " + "'" + req.params.movie_id+ "'", function (err, result, fields) {
     if (err) throw err;
@@ -96,7 +96,7 @@ app.get('/getComment/:movie_id', async (req,res) =>{
 app.post('/addComment', async (req, res)=>{
   const resp = {message:"Post successful"}
   
-  console.log("Responce: "+req.body.user_id +" "+ req.body.movie_id+" "+ req.body.comment)
+ // console.log("Responce: "+req.body.user_id +" "+ req.body.movie_id+" "+ req.body.comment)
 
   var sql = "INSERT INTO comments (user_id, movie_id,  comment) VALUES (" + "'" + req.body.user_id +"'" + ","+"'" + req.body.movie_id +"'" + ","+ "'" + req.body.comment + "'" + ")";
   con.query(sql, function (err, result) {
@@ -165,6 +165,47 @@ con.query(sql, function (err, result, fields) {
     });
     
 })
+app.get('/year/:year', async (req, res)=>{
+  var avg=0;
+  const resp = {message:"Years received"}
+  var years = req.params.year
+  var sql = ("SELECT id FROM movies WHERE YEAR =" + years +";")
+  con.query(sql, function(err, result) {
+
+    var sql2 = "SELECT rating FROM ratings WHERE movie_id = "
+
+    for (let a = 0; a < result.length; a++) {
+      if(a+1 == result.length){
+        sql2+=result[a].id
+      }else{
+        sql2+=result[a].id + " OR movie_id = "
+      }
+      
+    }
+    //console.log(sql2)
+    //console.log("hello")
+    con.query(sql2, function(err, result2) {
+
+  for (let b = 0; b < result2.length; b++) {
+      avg+=result2[b].rating
+
+
+      if(b+1 == result2.length){
+        
+        avg = avg/result2.length
+        var endresult = {avg:avg}
+        res.send(endresult)
+        console.log(endresult)
+      }
+
+    }
+  
+    if (err) throw err 
+    
+
+  })
+  })
+})
 
 app.get('/', async (req, res) => {
   // The handlebars template is stored in global state so this will only once.
@@ -224,7 +265,7 @@ app.get('/actors/:actors',async (req, res) =>{
   var arr = actors.split(', ').map(function (val){
     return String(val);
   })
-  console.log("Length of actors: "+arr.length)
+  //console.log("Length of actors: "+arr.length)
   
 
   for (let i = 0; i < arr.length; i++) {
@@ -264,8 +305,8 @@ app.get('/actors/:actors',async (req, res) =>{
     }
     avg = avg/result2.length
     theAverage[i] = avg
-    console.log("The average: "+avg)
-    console.log("The variable  "+theAverage[i])
+    //console.log("The average: "+avg)
+    //console.log("The variable  "+theAverage[i])
 
       if(i+1 == arr.length){
         console.log("End: "+theAverage)

@@ -79,6 +79,54 @@ app.get('/toplists/:user', async (req,res) =>{
     });
 })
 
+app.get('/actors/:actors', async (req, res) =>{
+  const resp = {message:"received"}
+  var actors=req.params.actors
+  var movieListForActor = req.params.movieListForActor
+  var arr = actors.split(', ').map(function (val){
+    return String(val);
+  })
+  var name1 = arr[0]
+  var name2 = arr[1]
+  var name3 = arr[2]
+  console.log("ACTORS: "+ name1 +" " +name2+" " +name3) 
+console.log("Actor in use: " + name2)
+  var sql = ("SELECT id FROM people WHERE name = "+ "'" +name2 + "'")
+  console.log(sql)
+  con.query(sql, function (err, result, fields) {
+    if (err) throw err;
+   console.log(result);
+
+   var sql1 = "SELECT movie_id FROM stars WHERE person_id = " + result[0].id + ";"
+   console.log(sql1)
+
+   con.query(sql1, function (err, result1, fields) {
+    console.log(result1)
+
+})
+  })
+
+res.send(resp)
+})
+
+app.get('/year/:year', async (req, res)=>{
+  const resp = {message:"Years received"}
+  var years = req.params.year
+  var sql = ("SELECT id FROM movies WHERE YEAR =" + years +";")
+  con.query(sql, function(err, result) {
+    if (err) throw err 
+    console.log("Years retrieved")
+    console.log(result)
+    res.send(result)
+
+    
+  })
+})
+
+
+
+ 
+
 app.post('/addToToplist', async (req, res)=>{
   const resp = {message:"Post successful"}
   

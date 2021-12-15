@@ -68,7 +68,9 @@ return {
         selected2:'Most Liked List',
         list:'1',
         users:model.users,
-        otherToplist: model.moviefromDb
+        otherToplist: model.moviefromDb,
+        actors:'',
+        year:''
         
     },
     
@@ -89,6 +91,24 @@ return {
                 console.log("users : "+users[0].email)
 
                 this.users = users;
+                const actorsList = await fetch('/actors/' + this.movie.Actors).then(res => res.json())
+                console.log(actorsList)
+                var actors=this.movie.Actors
+                console.log(actors)
+  var arr = actors.split(',').map(function (val){
+    return String(val);
+  })
+  var name1 = arr[0]
+  var name2 = arr[1]
+  var name3 = arr[2]
+  console.log("ACTORS: " + name1  +" \\" + name2 + " \\" + name3)
+
+  this.year = years;
+  const yearList = await fetch('/year/' + this.movie.Year).then(res => res.json())
+  console.log(yearList)
+  var years = this.movie.Year
+  console.log(years)
+
 
     },
     async search(){

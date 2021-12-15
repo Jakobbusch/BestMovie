@@ -115,9 +115,9 @@ return {
                   console.log(this.movie)
                   this.movieTitle = null;
                   const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
-                  console.log(comment_res)
+                  
                   this.getComment = comment_res;
-                  console.log(this.getComment)
+                  
                   
                   
                   var temp =this.movie.Actors
@@ -144,6 +144,7 @@ return {
                     this.year = {msg:"This movie is rated "+(yearList.avg-this.movie.imdbRating).toFixed(2) +" below the average movie this year"}
                   }
                   console.log(this.year.msg)
+                  //hello
                   }
                   
                   
@@ -233,7 +234,7 @@ await fetch('/addUser', {
   console.error('Error:', error);
 });
 
-      const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
+                    const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
                       console.log(comment_res)
                     this.getComment = comment_res;
                     this.commentText = null;

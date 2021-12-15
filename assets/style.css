@@ -105,7 +105,8 @@ a{
 
   .parent {
 	position: relative;
-	margin-left: 400px;
+	margin-right: 100px;
+	margin-left: 200px;
 	margin-top: 50px;
   }
 

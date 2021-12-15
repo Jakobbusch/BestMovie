@@ -212,7 +212,7 @@ app.get('/', async (req, res) => {
   if (!template) {
     // Load Handlebars template from filesystem and compile for use.
     try {
-      template = handlebars.compile(readFileSync('Views/index.html.hbs', 'utf8'));
+      template = handlebars.compile(readFileSync('View/index.html.hbs', 'utf8'));
     } catch (e) {
       console.error(e);
       res.status(500).send('Internal Server Error');

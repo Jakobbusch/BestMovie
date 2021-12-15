@@ -23,7 +23,7 @@ window.init =async function(){
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
-	//{{maybe}}
+	
 }
 
 
@@ -143,8 +143,7 @@ window.init =async function(){
 
 
 		</div>
-
-		</div>
+		
 		<div id="FavRadio" style="float: right;">
 		<input v-model:value = "list" type="radio" id="top1" value="1">
 		<label for="top1">Top 1</label>
@@ -152,6 +151,9 @@ window.init =async function(){
 		<label for="top2">Top 2</label>
 		</div>
 		<button id='addToFav' @click='addToFavourite()' style="float: right;">Add to Favorites</button>
+
+		</div>
+		
 		 
 
     </section>

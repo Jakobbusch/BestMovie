@@ -133,6 +133,104 @@ con.query(sql, function (err, result) {
   res.send(result)
 });
 })
+app.get('/getLikes/:userid',async (_,res)=>{
+
+  var sql = "SELECT `List 1 likes` from Users WHERE email = "+"'"+ _.params.userid+"'"
+  con.query(sql, function (err, result, fields) {
+    console.log(result[0]['List 1 likes'])
+    res.send(result)
+  })
+})
+
+app.post('/like', async (req, res)=>{
+
+  var listUserId;
+  var sql1;
+  if(req.body.listUserId ==1){
+    console.log("Most liked list")
+    var sql = "select email, `List 1 likes` from Users WHERE `List 1 likes` =(select MAX(`List 1 likes`) from Users)"
+con.query(sql, function (err, result, fields) {
+      if (err) throw err;
+      listUserId = result[0].email
+      sql1 = "SELECT likes from Users WHERE email = " + "'" + listUserId + "'"
+  con.query(sql1, function (err, result) {
+    if(result == ""){
+      console.log("Empty")
+      console.log(result)
+
+      var sql3 = "UPDATE Users SET likes = CONCAT(likes, "+ "'"+ req.body.userId+", '), `List 1 likes` = (`List 1 likes` +1) WHERE email ="+ "'" +listUserId +"'"
+      con.query(sql3, function (err, result) {
+      })
+      res.status(201)
+      res.send({message:"success"})
+    }else{
+      console.log("not empty")
+      var resp = result[0].likes
+      console.log(resp)
+      if(resp.includes(req.body.userId)){
+        console.log(req.body.userId +" already liked this list")
+        res.status(201)
+        res.send({message:"Failed"})
+    
+      }else if(!resp.includes(req.body.userId)){
+        console.log(req.body.userId +" has not liked "+ listUserId +" yet")
+        var sql3 = "UPDATE Users SET likes = CONCAT(likes, "+ "'"+ req.body.userId+", '), `List 1 likes` = (`List 1 likes` +1) WHERE email ="+ "'" +listUserId +"'"
+      con.query(sql3, function (err, result) {
+      })
+        res.status(201)
+        res.send({message:"success"})
+      }
+    }
+})
+
+    })
+  }else
+  {
+    console.log("Not most liked list")
+    listUserId = req.body.listUserId;
+
+    sql1 = "SELECT likes from Users WHERE email = " + "'" + listUserId + "'"
+  console.log(sql1)
+  con.query(sql1, function (err, result) {
+    if(result == ""){
+      console.log("Empty")
+      console.log(result)
+
+      var sql3 = "UPDATE Users SET likes = CONCAT(likes, "+ "'"+ req.body.userId+", '), `List 1 likes` = (`List 1 likes` +1) WHERE email ="+ "'" +listUserId +"'"
+      con.query(sql3, function (err, result) {
+      })
+      res.status(201)
+      res.send({message:"success"})
+    }else{
+      console.log("not empty")
+      var resp = result[0].likes
+      console.log(resp)
+      if(resp.includes(req.body.userId)){
+        console.log(req.body.userId +" already liked this list")
+        res.status(201)
+        res.send({message:"Failed"})
+    
+      }else if(!resp.includes(req.body.userId)){
+        console.log(req.body.userId +" has not liked "+ listUserId +" yet")
+        var sql3 = "UPDATE Users SET likes = CONCAT(likes, "+ "'"+ req.body.userId+", '), `List 1 likes` = (`List 1 likes` +1) WHERE email ="+ "'" +listUserId +"'"
+      con.query(sql3, function (err, result) {
+      })
+        res.status(201)
+        res.send({message:"success"})
+      }
+    }
+})
+    
+  }
+  
+  
+})
+   
+
+  //var sql2 = "UPDATE Users SET likes = CONCAT(likes, 'Mathias, ') WHERE email ='gardenhansen97@gmail.com'"
+
+  
+
 
 app.get('/OtherTopLists', async (req ,res) =>{
   
@@ -212,7 +310,7 @@ app.get('/', async (req, res) => {
   if (!template) {
     // Load Handlebars template from filesystem and compile for use.
     try {
-      template = handlebars.compile(readFileSync('Views/index.html.hbs', 'utf8'));
+      template = handlebars.compile(readFileSync('View/index.html.hbs', 'utf8'));
     } catch (e) {
       console.error(e);
       res.status(500).send('Internal Server Error');

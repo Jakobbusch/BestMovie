@@ -23,7 +23,7 @@ window.init =async function(){
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
 	
-	//{{maybe}}
+
 }
 
 
@@ -46,7 +46,7 @@ window.init =async function(){
   
   <div id="loginHide">
 	
- <div id="headerNav"> <a href="#home" >Home</a><a href="#profilepage" @click='topList1(); otherToplist1()'>Profile Page</a></div>
+ <div id="headerNav"> <a href="#home" >Home</a><a href="#profilepage" @click='topList1(); otherToplist1(); getLikes()'>Profile Page</a></div>
   
 </div>
 	
@@ -177,6 +177,7 @@ window.init =async function(){
             <option  name="FavList2" value="2">Private List</option>
         </optgroup>
     </select>
+	<p style="font-size: x-small;">Likes: \{{likes}}</p>
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody id="movieData">
@@ -206,6 +207,7 @@ window.init =async function(){
 		</tr>
 	</tbody>
 </table>
+<button @click='like()'><i class="fa fa-heart"></i></button>
 	  </div>
     </section>
     

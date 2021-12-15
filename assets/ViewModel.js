@@ -79,40 +79,47 @@ return {
         otherToplist: model.moviefromDb,
         actors:'',
         stars:'',
-        year:''
+        year:'',
+        likes:''
         
     },
     
    
     
     methods:{
-        async writeToConsole(){
-                //console.log(this.selected)
-               // console.log("List: " + this.list)
-               /*
-               const othertopList = await fetch('/OtherTopLists').then(res => res.json()).catch((error) => {
-                console.error('No movies in toplist');
-              });
-               this.otherToplist = othertopList
-                console.log(othertopList)*/
+      async getLikes(){
+        console.log("Get likes")
+        const likes = await fetch('/getLikes/'+userInfo).then(res => res.json())
+        this.likes=likes[0]['List 1 likes']
+        console.log(likes[0]['List 1 likes'])
+        //hello
+      },
+        async like(){
+          var data = {listUserId:this.selected2, userId:userInfo}
 
-              
-            //const users = await fetch('/allUsers').then(res => res.json());
-                //console.log("users : "+users[0].email)
-
-                //this.users = users;
-
-                
-                
-                
-                
-                
-                
-                
-                
+          fetch('/like', {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+          
+          console.log("Like")
+          
+          
+        
               },
               async search(){
                 if(this.movieTitle!=''){
+                  this.year = {msg:""}
                   console.log("hello")
                   const movie_res = await fetch('https://www.omdbapi.com/?apikey=8ea3b105&t='+this.movieTitle).then(res => res.json())
                   this.movie = movie_res

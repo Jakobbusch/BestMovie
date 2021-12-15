@@ -32,19 +32,26 @@ window.init =async function(){
 </head>
 <body onload = "init()">
 	<div id="base">
-
- 
+	
+ 	<button @click='logout()' class="LogoutButton" id="loginHide">Logout</button>
+	
+		<div class="Login" id="loginHide2">
+			<h2 class="welcome" id="loginHide2">Welcome To Best Movie!</h2>	
+			<h5 id="loginText">Use Your Google Account To Login</h5>	
+			<div class="col-md-12" id="LoginButton"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="#" @click='loginGoogle()' >
+			<img src="https://img.icons8.com/color/16/000000/google-logo.png">Google Login</a> </div>
+			
+		</div>
   
   
   <div id="loginHide">
 	
- <div id="headerNav"> <a href="#home">Home</a><a href="#profilepage" @click='topList1(); otherToplist1()'>Profile Page</a></div>
+ <div id="headerNav"> <a href="#home" >Home</a><a href="#profilepage" @click='topList1(); otherToplist1()'>Profile Page</a></div>
   
 </div>
+	
 
 	
-<button @click='loginGoogle()'>Google Login</button>
-		<button @click='logout()'>Logout</button>
 	
   
   	  
@@ -138,18 +145,18 @@ window.init =async function(){
 			</table>
 </div>
 <div id='rel' class="child child-12">
-	<p>\{{year.msg}}</p>
+	<h5>\{{year.msg}}</h5>
 	</div>
 
 
 		</div>
 
-		</div>
+		
 		<div id="FavRadio" style="float: right;">
 		<input v-model:value = "list" type="radio" id="top1" value="1">
-		<label for="top1">Top 1</label>
+		<label for="top1">Public</label>
 		<input v-model:value = "list" type="radio" id="top2" value="2">
-		<label for="top2">Top 2</label>
+		<label for="top2">Private</label>
 		</div>
 		<button id='addToFav' @click='addToFavourite()' style="float: right;">Add to Favorites</button>
 		 
@@ -157,8 +164,7 @@ window.init =async function(){
     </section>
 
     <section id="profilepage">
-      <h2>Profile Page</h2>
-	  <button @click='writeToConsole()'>Yes</button>
+      
 
 	  <div id="favListDiv">
 
@@ -167,8 +173,8 @@ window.init =async function(){
 			  <h2>Favorite List</h2>
 			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @change='topList1()' >
         <optgroup label="Select List">
-            <option  name="FavList1" value="1">Fav. List 1</option>
-            <option  name="FavList2" value="2">Fav. List 2</option>
+            <option  name="FavList1" value="1">Public List</option>
+            <option  name="FavList2" value="2">Private List</option>
         </optgroup>
     </select>
   
@@ -183,7 +189,7 @@ window.init =async function(){
 	  </div>
 	  <div id="otherfavListDiv">
 		  <table id="favList">
-			  <h2>user's Favorite List</h2>
+			  <h2>Other Toplists</h2>
 			  <select v-model:value='selected2' class="selectpicker" data-style="btn-info" name="selectpicker" @change="otherToplist1()">
         <optgroup label="Select User">
             <option name="" value="1">Most Liked List</option>
@@ -209,12 +215,12 @@ window.init =async function(){
 
 
   </div>
-
+</div>
 
 
 <footer>
-	<h2>Best Movies Platform</h2>
-	<p>Share your enthusiasm with fellow movie lovers</p>
+	<h2 class="footerH">Best Movies Platform</h2>
+	<p class="footerP">Share your enthusiasm with fellow movie lovers</p>
 </footer>
 </body>
 

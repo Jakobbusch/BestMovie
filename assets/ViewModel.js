@@ -42,7 +42,9 @@ export default (el, init_model) => {
         user.providerData.forEach((profile) => {
         userInfo = profile.email;
         userName = profile.displayName;
-        document.getElementById('loginHide').style.visibility = 'visible';
+        document.getElementById('loginHide').style.display ='block';
+        document.getElementById('loginHide2').style.display   ='none';
+        document.getElementById('headerNav').style.display ='block';
         console.log("Sign-in provider: " + profile.providerId);
         console.log("  Provider-specific UID: " + profile.uid);
         console.log("  Name: " + profile.displayName);
@@ -51,8 +53,11 @@ export default (el, init_model) => {
     });
     }
     } else {
-        console.log("Login is NOT Working!")
-        document.getElementById('loginHide').style.visibility = 'hidden';
+        
+        document.getElementById('loginHide').style.display  ='none';
+        document.getElementById('loginHide2').style.display  ='block'; 
+        document.getElementById('headerNav').style.display ='none';
+      
     }
 
 
@@ -198,6 +203,8 @@ await fetch('/addUser', {
         signInWithRedirect(auth, provider); 
         this.userdata = userInfo
         console.log("Email: "+userInfo)
+        
+        
         
       },
 

@@ -112,19 +112,15 @@ app.post('/addComment', async (req, res)=>{
 
 app.post('/addToToplist', async (req, res)=>{
   const resp = {message:"Post successful"}
-  
-  //console.log("Responce: "+req.body.userID +" "+ req.body.movieID + req.body.list)
-
   var sql = "INSERT INTO FavoriteTable (UserID, MovieID, List) VALUES (" + "'" + req.body.userID +"'" + ","+ req.body.movieID + ","+ req.body.list+")";
   con.query(sql, function (err, result) {
     if (err) throw err;
-   // console.log("1 record inserted");
   });
-  
   res.status(201)
   res.send(resp)
-
 })
+
+
 app.get('/allUsers',async (req,res) =>{
 var sql = "SELECT email FROM Users"
 con.query(sql, function (err, result) {

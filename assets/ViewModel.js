@@ -145,6 +145,8 @@ return {
                     const temp2 = {actor1:actors[0].toFixed(2),actor2:actors[1].toFixed(2),actor3:actors[2].toFixed(2)}
                     this.actors = temp2;
                     // get yearly average
+
+                    /*
                     const yearList = await fetch('/year/' + this.movie.Year).then(res => res.json())
                   console.log(yearList)
                   var years = this.movie.Year
@@ -156,6 +158,7 @@ return {
                     this.year = {msg:"This movie is rated "+(yearList.avg-this.movie.imdbRating).toFixed(2) +" below the average movie this year"}
                   }
                   console.log(this.year.msg)
+                  */
                   }
                   
                   
@@ -164,11 +167,7 @@ return {
 
     async addToFavourite(){
         if(this.movie.Title!=undefined){
-            console.log(this.movie.Title + ' Added to favourites')
             const data = {userID:userInfo, movieID: this.movie.imdbID.split("tt").pop(),list:this.list}
-            console.log(data)
-            console.log("UserData: " + this.userdata + " List: "+this.list)
-    
         fetch('/addToToplist', {
   method: 'POST', // or 'PUT'
   headers: {

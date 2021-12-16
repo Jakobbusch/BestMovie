@@ -173,11 +173,11 @@ window.init =async function(){
 			  <h2>Favorite List</h2>
 			  <select v-model:value='selected' class="selectpicker" data-style="btn-info" name="selectpicker" @change='topList1()' >
         <optgroup label="Select List">
-            <option  name="FavList1" value="1">Public List</option>
+            <option  name="FavList1" value="1">Public List   (\{{likes}}♡)</option>
             <option  name="FavList2" value="2">Private List</option>
         </optgroup>
     </select>
-	<p style="font-size: x-small;">Likes: \{{likes}}</p>
+	
   
     <thead><tr><td>Movie Name</td><td>Release</td></tr></thead>
 	<tbody id="movieData">

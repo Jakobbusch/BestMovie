@@ -22,8 +22,6 @@ window.init =async function(){
 	const theModel = model(movie, toplist, getComment, users, otherToplist)
 	const vm = viewModel(document.getElementById('base'), theModel)
 	const app = new Vue(vm)
-	
-
 }
 
 
@@ -32,7 +30,6 @@ window.init =async function(){
 </head>
 <body onload = "init()">
 	<div id="base">
-	
  	<button @click='logout()' class="LogoutButton" id="loginHide">Logout</button>
 	
 		<div class="Login" id="loginHide2">
@@ -50,11 +47,6 @@ window.init =async function(){
   
 </div>
 	
-
-	
-	
-  
-  	  
 
   
   <div class="content" id="loginHide">

@@ -45,11 +45,6 @@ export default (el, init_model) => {
         document.getElementById('loginHide').style.display ='block';
         document.getElementById('loginHide2').style.display   ='none';
         document.getElementById('headerNav').style.display ='block';
-        console.log("Sign-in provider: " + profile.providerId);
-        console.log("  Provider-specific UID: " + profile.uid);
-        console.log("  Name: " + profile.displayName);
-        console.log("  Email: " + profile.email);
-        console.log("  Photo URL: " + profile.photoURL);
     });
     }
     } else {
@@ -88,11 +83,8 @@ return {
     
     methods:{
       async getLikes(){
-        console.log("Get likes")
         const likes = await fetch('/getLikes/'+userInfo).then(res => res.json())
         this.likes=likes[0]['List 1 likes']
-        console.log(likes[0]['List 1 likes'])
-        //hello
       },
         async like(){
           var data = {listUserId:this.selected2, userId:userInfo}
@@ -111,32 +103,20 @@ return {
           .catch((error) => {
             console.error('Error:', error);
           });
-          
-          console.log("Like")
-          
-          
-        
+     
               },
               async search(){
                 if(this.movieTitle!=''){
                   this.year = {msg:""}
-                  console.log("hello")
                   const movie_res = await fetch('https://www.omdbapi.com/?apikey=8ea3b105&t='+this.movieTitle).then(res => res.json())
                   this.movie = movie_res
-                  //console.log(this.movie.Released)
-                  console.log(this.movie)
                   this.movieTitle = null;
                   const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
-                  console.log(comment_res)
-                  this.getComment = comment_res;
-                  console.log(this.getComment)
-                  
-                  
+                  this.getComment = comment_res;       
                   var temp =this.movie.Actors
                   var temp1 = temp.split(', ').map(function (val){
                     return String(val);})
-                    
-                    
+
                     this.stars = {actor1:temp1[0],actor2:temp1[1],actor3:temp1[2]}
                     
                     // get average movie rating for actors
@@ -160,9 +140,7 @@ return {
                   console.log(this.year.msg)
                   */
                   }
-                  
-                  
-                  
+              
     },
 
     async addToFavourite(){
@@ -205,13 +183,8 @@ await fetch('/addUser', {
     },
     
     async loginGoogle() {
-        console.log("Hello from google")
         signInWithRedirect(auth, provider); 
-        this.userdata = userInfo
-        console.log("Email: "+userInfo)
-        
-        
-        
+        this.userdata = userInfo          
       },
 
     async logout() {
@@ -222,15 +195,9 @@ await fetch('/addUser', {
         });
     },
     async addComment(){
-        console.log("Hello " + this.commentText)
         console.log(this.movie.Title)
         if(this.movie.Title!=undefined){
-            console.log("Added comment: " + this.commentText)
-            console.log("to this movie: " + this.movie.Title)
-            console.log("From this user: " + userName)
             const data = {user_id:userName, movie_id: this.movie.imdbID.split("tt").pop(), comment:this.commentText}
-            console.log(data)
-    
         fetch('/addComment', {
   method: 'POST', // or 'PUT'
   headers: {
@@ -247,7 +214,6 @@ await fetch('/addUser', {
 });
 
       const comment_res = await fetch('/getComment/' + this.movie.imdbID.split("tt").pop()).then(res => res.json())
-                      console.log(comment_res)
                     this.getComment = comment_res;
                     this.commentText = null;
          
@@ -261,14 +227,10 @@ await fetch('/addUser', {
     },
 
     async otherToplist1(){
-      console.log("Toplist selected for: " + this.selected2)
       if(this.selected2 == 1){
-        console.log(this.selected2 + " first ")
         this.otherToplist = await fetch('/OtherTopLists').then(res => res.json());
       }else{
-        console.log(this.selected2 + " other than first ")
         this.otherToplist = await fetch('/toplists/'+this.selected2+"+"+1).then(res => res.json()).catch((error) => {
-          console.log(('Error: No movies in Selected Toplist'));
         })
       }
       
